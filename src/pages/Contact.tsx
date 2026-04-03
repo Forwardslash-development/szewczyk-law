@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { useTranslation } from 'react-i18next'
 import { Phone, Mail, MapPin, Clock, ArrowRight, CheckCircle } from 'lucide-react'
 
 interface ContactProps {
@@ -6,18 +7,18 @@ interface ContactProps {
 }
 
 const INITIAL_FORM = {
-  name:    '',
-  phone:   '',
-  email:   '',
+  name:     '',
+  phone:    '',
+  email:    '',
   caseType: '',
-  message: '',
+  message:  '',
 }
 
 export default function Contact({ isDark }: ContactProps) {
-
-  const [form, setForm]       = useState(INITIAL_FORM)
+  const { t } = useTranslation()
+  const [form, setForm]           = useState(INITIAL_FORM)
   const [submitted, setSubmitted] = useState(false)
-  const [errors, setErrors]   = useState<Partial<typeof INITIAL_FORM>>({})
+  const [errors, setErrors]       = useState<Partial<typeof INITIAL_FORM>>({})
 
   const heroBg       = isDark ? '#0A1628' : '#1B2E4B'
   const pageBg       = isDark ? '#0F1C2E' : '#F8F5F0'
@@ -32,20 +33,17 @@ export default function Contact({ isDark }: ContactProps) {
 
   function validate() {
     const e: Partial<typeof INITIAL_FORM> = {}
-    if (!form.name.trim())    e.name    = 'Name is required'
-    if (!form.phone.trim())   e.phone   = 'Phone number is required'
-    if (!form.email.trim())   e.email   = 'Email is required'
-    if (!form.message.trim()) e.message = 'Please describe your situation'
+    if (!form.name.trim())    e.name    = t('contact.name_error')
+    if (!form.phone.trim())   e.phone   = t('contact.phone_error')
+    if (!form.email.trim())   e.email   = t('contact.email_error')
+    if (!form.message.trim()) e.message = t('contact.message_error')
     return e
   }
 
   function handleSubmit(e: React.MouseEvent) {
     e.preventDefault()
     const errs = validate()
-    if (Object.keys(errs).length > 0) {
-      setErrors(errs)
-      return
-    }
+    if (Object.keys(errs).length > 0) { setErrors(errs); return }
     setErrors({})
     setSubmitted(true)
   }
@@ -56,35 +54,48 @@ export default function Contact({ isDark }: ContactProps) {
   }
 
   const inputStyle = {
-    fontFamily: 'Inter, sans-serif',
-    fontSize: '14px',
-    padding: '10px 12px',
-    border: `1.5px solid ${inputBorder}`,
-    borderRadius: '4px',
-    color: isDark ? '#F9FAFB' : '#2C2C2C',
-    background: inputBg,
-    width: '100%',
-    outline: 'none',
-    transition: 'border-color 0.15s',
+    fontFamily: 'Inter, sans-serif', fontSize: '14px', padding: '10px 12px',
+    border: `1.5px solid ${inputBorder}`, borderRadius: '4px',
+    color: isDark ? '#F9FAFB' : '#2C2C2C', background: inputBg,
+    width: '100%', outline: 'none', transition: 'border-color 0.15s',
   }
 
   const labelStyle = {
-    fontFamily: 'Inter, sans-serif',
-    fontSize: '12px',
-    fontWeight: 600 as const,
-    color: labelColor,
-    display: 'block',
-    marginBottom: '5px',
-    letterSpacing: '0.03em',
+    fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 600 as const,
+    color: labelColor, display: 'block', marginBottom: '5px', letterSpacing: '0.03em',
   }
 
   const errorStyle = {
-    fontFamily: 'Inter, sans-serif',
-    fontSize: '11px',
-    color: '#C0392B',
-    marginTop: '4px',
-    display: 'block',
+    fontFamily: 'Inter, sans-serif', fontSize: '11px',
+    color: '#C0392B', marginTop: '4px', display: 'block',
   }
+
+  const INFO_CARDS = [
+    {
+      icon: Phone,
+      titleKey: 'contact.phone_title',
+      lines: [t('contact.phone_line1'), t('contact.phone_line2')],
+      href: 'tel:+13125550100',
+    },
+    {
+      icon: Mail,
+      titleKey: 'contact.email_title',
+      lines: [t('contact.email_line1'), t('contact.email_line2')],
+      href: 'mailto:szewczyklaw@gmail.com',
+    },
+    {
+      icon: MapPin,
+      titleKey: 'contact.office_title',
+      lines: [t('contact.office_line1'), t('contact.office_line2')],
+      href: undefined,
+    },
+    {
+      icon: Clock,
+      titleKey: 'contact.hours_title',
+      lines: [t('contact.hours_line1'), t('contact.hours_line2'), t('contact.hours_line3')],
+      href: undefined,
+    },
+  ]
 
   return (
     <div style={{ background: pageBg, transition: 'background 0.2s' }}>
@@ -93,125 +104,66 @@ export default function Contact({ isDark }: ContactProps) {
       <section style={{ background: heroBg, padding: '64px 24px', transition: 'background 0.2s' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           <div style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: '11px',
-            fontWeight: 600,
-            color: '#C9A84C',
-            letterSpacing: '0.16em',
-            textTransform: 'uppercase',
-            marginBottom: '16px',
+            fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
+            color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
           }}>
-            Get in Touch
+            {t('contact.overline')}
           </div>
           <h1 style={{
             fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: 'clamp(32px, 4vw, 52px)',
-            fontWeight: 700,
-            color: '#ffffff',
-            lineHeight: 1.15,
-            marginBottom: '16px',
-            maxWidth: '600px',
+            fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
+            color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '600px',
           }}>
-            Contact Us
+            {t('contact.title')}
           </h1>
           <p style={{
-            fontFamily: 'Inter, sans-serif',
-            fontSize: '16px',
-            color: 'rgba(255,255,255,0.7)',
-            maxWidth: '500px',
-            lineHeight: 1.7,
+            fontFamily: 'Inter, sans-serif', fontSize: '16px',
+            color: 'rgba(255,255,255,0.7)', maxWidth: '500px', lineHeight: 1.7,
           }}>
-            Ready to discuss your case? Reach out by phone, email, or fill out
-            the form below. We respond within 24 hours.
+            {t('contact.subtitle')}
           </p>
         </div>
       </section>
 
       {/* Main content */}
-      <section style={{ padding: '72px 24px', transition: 'background 0.2s' }}>
+      <section style={{ padding: '72px 24px' }}>
         <div style={{
-          maxWidth: '1400px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: '1fr 2fr',
-          gap: '48px',
-          alignItems: 'start',
+          maxWidth: '1400px', margin: '0 auto',
+          display: 'grid', gridTemplateColumns: '1fr 2fr',
+          gap: '48px', alignItems: 'start',
         }}
         className="contact-grid"
         >
 
           {/* Left — Contact info */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-
-            {/* Info cards */}
-            {[
-              {
-                icon: Phone,
-                title: 'Phone',
-                lines: ['(312) 555-0100', 'Available 24/7'],
-                href: 'tel:+13125550100',
-              },
-              {
-                icon: Mail,
-                title: 'Email',
-                lines: ['szewczyklaw@gmail.com', 'We reply within 24 hours'],
-                href: 'mailto:szewczyklaw@gmail.com',
-              },
-              {
-                icon: MapPin,
-                title: 'Office',
-                lines: ['[Street Address]', 'Chicago, Illinois [ZIP]'],
-                href: undefined,
-              },
-              {
-                icon: Clock,
-                title: 'Office Hours',
-                lines: ['Mon – Fri: 9am – 6pm', 'Sat: By appointment', 'Phone: 24/7'],
-                href: undefined,
-              },
-            ].map(({ icon: Icon, title, lines, href }) => (
-              <div key={title} style={{
-                background: cardBg,
-                border: `1px solid ${cardBorder}`,
-                borderRadius: '8px',
-                padding: '20px',
-                transition: 'background 0.2s',
+            {INFO_CARDS.map(({ icon: Icon, titleKey, lines, href }) => (
+              <div key={titleKey} style={{
+                background: cardBg, border: `1px solid ${cardBorder}`,
+                borderRadius: '8px', padding: '20px', transition: 'background 0.2s',
               }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '14px' }}>
                   <div style={{
-                    width: '36px',
-                    height: '36px',
+                    width: '36px', height: '36px',
                     background: isDark ? 'rgba(201,168,76,0.1)' : '#F0EBE3',
-                    borderRadius: '8px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    flexShrink: 0,
+                    borderRadius: '8px', display: 'flex', alignItems: 'center',
+                    justifyContent: 'center', flexShrink: 0,
                   }}>
                     <Icon size={16} color="#C9A84C" strokeWidth={1.5} />
                   </div>
                   <div>
                     <div style={{
-                      fontFamily: 'Inter, sans-serif',
-                      fontSize: '11px',
-                      fontWeight: 600,
-                      color: '#C9A84C',
-                      letterSpacing: '0.12em',
-                      textTransform: 'uppercase',
-                      marginBottom: '4px',
+                      fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
+                      color: '#C9A84C', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: '4px',
                     }}>
-                      {title}
+                      {t(titleKey)}
                     </div>
                     {lines.map((line, i) => (
                       href && i === 0
                         ? <a key={i} href={href} style={{
-                            display: 'block',
-                            fontFamily: 'Inter, sans-serif',
-                            fontSize: '14px',
-                            fontWeight: 500,
-                            color: headingColor,
-                            textDecoration: 'none',
-                            marginBottom: '2px',
+                            display: 'block', fontFamily: 'Inter, sans-serif',
+                            fontSize: '14px', fontWeight: 500, color: headingColor,
+                            textDecoration: 'none', marginBottom: '2px',
                           }}>{line}</a>
                         : <div key={i} style={{
                             fontFamily: 'Inter, sans-serif',
@@ -228,218 +180,142 @@ export default function Contact({ isDark }: ContactProps) {
 
             {/* Map placeholder */}
             <div style={{
-              background: cardBg,
-              border: `1px solid ${cardBorder}`,
-              borderRadius: '8px',
-              height: '200px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              flexDirection: 'column',
-              gap: '8px',
+              background: cardBg, border: `1px solid ${cardBorder}`,
+              borderRadius: '8px', height: '200px',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              flexDirection: 'column', gap: '8px',
             }}>
               <MapPin size={24} color={mutedColor} strokeWidth={1.5} />
               <span style={{
-                fontFamily: 'Inter, sans-serif',
-                fontSize: '12px',
-                color: mutedColor,
-                fontStyle: 'italic',
+                fontFamily: 'Inter, sans-serif', fontSize: '12px',
+                color: mutedColor, fontStyle: 'italic',
               }}>
-                [ Map — add when address is confirmed ]
+                {t('contact.map_placeholder')}
               </span>
             </div>
           </div>
 
-          {/* Right — Contact form */}
+          {/* Right — Form */}
           <div style={{
-            background: cardBg,
-            border: `1px solid ${cardBorder}`,
-            borderRadius: '8px',
-            padding: '36px',
-            transition: 'background 0.2s',
+            background: cardBg, border: `1px solid ${cardBorder}`,
+            borderRadius: '8px', padding: '36px', transition: 'background 0.2s',
           }}>
             {submitted ? (
               <div style={{ textAlign: 'center', padding: '48px 24px' }}>
                 <div style={{
-                  width: '56px',
-                  height: '56px',
+                  width: '56px', height: '56px',
                   background: isDark ? 'rgba(201,168,76,0.1)' : '#F0EBE3',
-                  borderRadius: '50%',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  margin: '0 auto 20px',
+                  borderRadius: '50%', display: 'flex', alignItems: 'center',
+                  justifyContent: 'center', margin: '0 auto 20px',
                 }}>
                   <CheckCircle size={28} color="#C9A84C" strokeWidth={1.5} />
                 </div>
                 <h3 style={{
-                  fontFamily: 'Playfair Display, Georgia, serif',
-                  fontSize: '24px',
-                  fontWeight: 600,
-                  color: headingColor,
-                  marginBottom: '12px',
+                  fontFamily: 'Playfair Display, Georgia, serif', fontSize: '24px',
+                  fontWeight: 600, color: headingColor, marginBottom: '12px',
                 }}>
-                  Message Received
+                  {t('contact.success_title')}
                 </h3>
                 <p style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '15px',
-                  color: bodyColor,
-                  lineHeight: 1.7,
-                  marginBottom: '24px',
+                  fontFamily: 'Inter, sans-serif', fontSize: '15px',
+                  color: bodyColor, lineHeight: 1.7, marginBottom: '24px',
                 }}>
-                  Thank you for reaching out. Conrad or a member of his team
-                  will be in touch within 24 hours.
+                  {t('contact.success_desc')}
                 </p>
                 <button
                   onClick={() => { setSubmitted(false); setForm(INITIAL_FORM) }}
                   style={{
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '13px',
-                    color: headingColor,
-                    background: 'transparent',
-                    border: `1.5px solid ${cardBorder}`,
-                    borderRadius: '4px',
-                    padding: '8px 20px',
-                    cursor: 'pointer',
+                    fontFamily: 'Inter, sans-serif', fontSize: '13px', color: headingColor,
+                    background: 'transparent', border: `1.5px solid ${cardBorder}`,
+                    borderRadius: '4px', padding: '8px 20px', cursor: 'pointer',
                   }}
                 >
-                  Send Another Message
+                  {t('contact.send_another')}
                 </button>
               </div>
             ) : (
               <>
                 <div style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '11px',
-                  fontWeight: 600,
-                  color: '#C9A84C',
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
-                  marginBottom: '8px',
+                  fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
+                  color: '#C9A84C', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '8px',
                 }}>
-                  Send a Message
+                  {t('contact.form_overline')}
                 </div>
                 <h2 style={{
-                  fontFamily: 'Playfair Display, Georgia, serif',
-                  fontSize: '24px',
-                  fontWeight: 600,
-                  color: headingColor,
-                  marginBottom: '28px',
-                  transition: 'color 0.2s',
+                  fontFamily: 'Playfair Display, Georgia, serif', fontSize: '24px',
+                  fontWeight: 600, color: headingColor, marginBottom: '28px', transition: 'color 0.2s',
                 }}>
-                  Tell Us About Your Case
+                  {t('contact.form_title')}
                 </h2>
 
                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: '16px' }} className="form-row">
                   <div>
-                    <label style={labelStyle}>Full Name *</label>
-                    <input
-                      type="text"
-                      placeholder="Jane Smith"
-                      value={form.name}
+                    <label style={labelStyle}>{t('contact.name_label')} *</label>
+                    <input type="text" placeholder={t('contact.name_placeholder')} value={form.name}
                       onChange={e => handleChange('name', e.target.value)}
-                      style={{ ...inputStyle, borderColor: errors.name ? '#C0392B' : inputBorder }}
-                    />
+                      style={{ ...inputStyle, borderColor: errors.name ? '#C0392B' : inputBorder }} />
                     {errors.name && <span style={errorStyle}>{errors.name}</span>}
                   </div>
                   <div>
-                    <label style={labelStyle}>Phone Number *</label>
-                    <input
-                      type="tel"
-                      placeholder="(312) 555-0100"
-                      value={form.phone}
+                    <label style={labelStyle}>{t('contact.phone_label')} *</label>
+                    <input type="tel" placeholder="(312) 555-0100" value={form.phone}
                       onChange={e => handleChange('phone', e.target.value)}
-                      style={{ ...inputStyle, borderColor: errors.phone ? '#C0392B' : inputBorder }}
-                    />
+                      style={{ ...inputStyle, borderColor: errors.phone ? '#C0392B' : inputBorder }} />
                     {errors.phone && <span style={errorStyle}>{errors.phone}</span>}
                   </div>
                 </div>
 
                 <div style={{ marginBottom: '16px' }}>
-                  <label style={labelStyle}>Email Address *</label>
-                  <input
-                    type="email"
-                    placeholder="jane@example.com"
-                    value={form.email}
+                  <label style={labelStyle}>{t('contact.email_label')} *</label>
+                  <input type="email" placeholder="jane@example.com" value={form.email}
                     onChange={e => handleChange('email', e.target.value)}
-                    style={{ ...inputStyle, borderColor: errors.email ? '#C0392B' : inputBorder }}
-                  />
+                    style={{ ...inputStyle, borderColor: errors.email ? '#C0392B' : inputBorder }} />
                   {errors.email && <span style={errorStyle}>{errors.email}</span>}
                 </div>
 
                 <div style={{ marginBottom: '16px' }}>
-                  <label style={labelStyle}>Type of Case</label>
-                  <select
-                    value={form.caseType}
-                    onChange={e => handleChange('caseType', e.target.value)}
-                    style={{ ...inputStyle }}
-                  >
-                    <option value="">Select a case type...</option>
-                    <option value="car-accident">Car / Truck Accident</option>
-                    <option value="slip-fall">Slip &amp; Fall</option>
-                    <option value="workplace">Workplace Injury</option>
-                    <option value="medical">Medical Malpractice</option>
-                    <option value="wrongful-death">Wrongful Death</option>
-                    <option value="product">Product Liability</option>
-                    <option value="other">Other</option>
+                  <label style={labelStyle}>{t('contact.case_type_label')}</label>
+                  <select value={form.caseType} onChange={e => handleChange('caseType', e.target.value)} style={inputStyle}>
+                    <option value="">{t('contact.case_type_placeholder')}</option>
+                    <option value="car-accident">{t('contact.case_car')}</option>
+                    <option value="slip-fall">{t('contact.case_slip')}</option>
+                    <option value="workplace">{t('contact.case_workplace')}</option>
+                    <option value="medical">{t('contact.case_medical')}</option>
+                    <option value="wrongful-death">{t('contact.case_wrongful')}</option>
+                    <option value="product">{t('contact.case_product')}</option>
+                    <option value="other">{t('contact.case_other')}</option>
                   </select>
                 </div>
 
                 <div style={{ marginBottom: '24px' }}>
-                  <label style={labelStyle}>Describe Your Situation *</label>
-                  <textarea
-                    placeholder="Briefly describe what happened and when..."
-                    value={form.message}
-                    onChange={e => handleChange('message', e.target.value)}
-                    rows={5}
-                    style={{ ...inputStyle, resize: 'vertical', borderColor: errors.message ? '#C0392B' : inputBorder }}
-                  />
+                  <label style={labelStyle}>{t('contact.message_label')} *</label>
+                  <textarea placeholder={t('contact.message_placeholder')} value={form.message}
+                    onChange={e => handleChange('message', e.target.value)} rows={5}
+                    style={{ ...inputStyle, resize: 'vertical', borderColor: errors.message ? '#C0392B' : inputBorder }} />
                   {errors.message && <span style={errorStyle}>{errors.message}</span>}
                 </div>
 
-                {/* Disclaimer */}
                 <div style={{
                   background: isDark ? 'rgba(201,168,76,0.06)' : '#F8F5F0',
-                  borderLeft: '3px solid #C9A84C',
-                  padding: '12px 16px',
-                  borderRadius: '0 4px 4px 0',
-                  marginBottom: '24px',
+                  borderLeft: '3px solid #C9A84C', padding: '12px 16px',
+                  borderRadius: '0 4px 4px 0', marginBottom: '24px',
                 }}>
                   <p style={{
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '11px',
-                    color: mutedColor,
-                    lineHeight: 1.7,
-                    fontStyle: 'italic',
-                    margin: 0,
+                    fontFamily: 'Inter, sans-serif', fontSize: '11px', color: mutedColor,
+                    lineHeight: 1.7, fontStyle: 'italic', margin: 0,
                   }}>
-                    Submitting this form does not create an attorney-client relationship.
-                    Do not include confidential information until a representation agreement
-                    has been signed.
+                    {t('contact.disclaimer')}
                   </p>
                 </div>
 
-                <button
-                  onClick={handleSubmit}
-                  style={{
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '15px',
-                    fontWeight: 500,
-                    background: '#C0392B',
-                    color: '#ffffff',
-                    padding: '13px 28px',
-                    borderRadius: '4px',
-                    border: 'none',
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    gap: '8px',
-                    width: '100%',
-                    justifyContent: 'center',
-                  }}
-                >
-                  Send Message
+                <button onClick={handleSubmit} style={{
+                  fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
+                  background: '#C0392B', color: '#ffffff', padding: '13px 28px',
+                  borderRadius: '4px', border: 'none', cursor: 'pointer',
+                  display: 'inline-flex', alignItems: 'center', gap: '8px',
+                  width: '100%', justifyContent: 'center',
+                }}>
+                  {t('contact.submit_btn')}
                   <ArrowRight size={16} strokeWidth={2} />
                 </button>
               </>
@@ -449,16 +325,8 @@ export default function Contact({ isDark }: ContactProps) {
       </section>
 
       <style>{`
-        @media (max-width: 900px) {
-          .contact-grid {
-            grid-template-columns: 1fr !important;
-          }
-        }
-        @media (max-width: 560px) {
-          .form-row {
-            grid-template-columns: 1fr !important;
-          }
-        }
+        @media (max-width: 900px) { .contact-grid { grid-template-columns: 1fr !important; } }
+        @media (max-width: 560px) { .form-row { grid-template-columns: 1fr !important; } }
       `}</style>
     </div>
   )
