@@ -1,4 +1,5 @@
 import { motion, useInView } from 'framer-motion'
+import type { Variants } from 'framer-motion'
 import { useRef } from 'react'
 
 interface AnimatedSectionProps {
@@ -8,7 +9,8 @@ interface AnimatedSectionProps {
   className?: string
 }
 
-// Reusable scroll-triggered fade-up for sections
+const EASE: [number, number, number, number] = [0.22, 1, 0.36, 1]
+
 export function AnimatedSection({ children, delay = 0, style, className }: AnimatedSectionProps) {
   const ref = useRef(null)
   const inView = useInView(ref, { once: true, margin: '-80px' })
@@ -18,7 +20,7 @@ export function AnimatedSection({ children, delay = 0, style, className }: Anima
       ref={ref}
       initial={{ opacity: 0, y: 32 }}
       animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.55, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.55, delay, ease: EASE }}
       style={style}
       className={className}
     >
@@ -27,8 +29,7 @@ export function AnimatedSection({ children, delay = 0, style, className }: Anima
   )
 }
 
-// Stagger container — children animate in sequence
-export const staggerContainer = {
+export const staggerContainer: Variants = {
   hidden: {},
   show: {
     transition: {
@@ -38,21 +39,19 @@ export const staggerContainer = {
   },
 }
 
-// Individual staggered child
-export const fadeUp = {
+export const fadeUp: Variants = {
   hidden: { opacity: 0, y: 28 },
   show: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as [number, number, number, number] },
   },
 }
 
-// Fade in only (no vertical movement)
-export const fadeIn = {
+export const fadeIn: Variants = {
   hidden: { opacity: 0 },
   show: {
     opacity: 1,
-    transition: { duration: 0.4, ease: 'easeOut' },
+    transition: { duration: 0.4, ease: 'easeOut' as const },
   },
 }
