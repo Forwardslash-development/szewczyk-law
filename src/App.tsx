@@ -5,12 +5,12 @@ import PageWrapper from './components/layout/PageWrapper'
 import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
+import Services from './pages/Services'
+import FAQ from './pages/FAQ'
+import Consultation from './pages/Consultation'
 import useDarkMode from './hooks/useDarkMode'
 
-const Services     = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Services</main></PageWrapper>
-const Intake       = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Intake</main></PageWrapper>
-const FAQ          = () => <PageWrapper><main style={{ padding: '2rem 0' }}>FAQ</main></PageWrapper>
-const Consultation = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Consultation</main></PageWrapper>
+const Intake = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Intake — coming soon</main></PageWrapper>
 
 export default function App() {
   const { isDark, toggle } = useDarkMode()
@@ -20,13 +20,13 @@ export default function App() {
       <Nav isDark={isDark} onToggleDark={toggle} />
       <div style={{ flex: 1 }}>
         <Routes>
-          <Route path="/"             element={<Home isDark={isDark} />}    />
-          <Route path="/services"     element={<Services />}                />
-          <Route path="/about"        element={<About isDark={isDark} />}   />
-          <Route path="/contact"      element={<Contact isDark={isDark} />} />
-          <Route path="/intake"       element={<Intake />}                  />
-          <Route path="/faq"          element={<FAQ />}                     />
-          <Route path="/consultation" element={<Consultation />}            />
+          <Route path="/"             element={<Home isDark={isDark} />}         />
+          <Route path="/services"     element={<Services isDark={isDark} />}     />
+          <Route path="/about"        element={<About isDark={isDark} />}        />
+          <Route path="/contact"      element={<Contact isDark={isDark} />}      />
+          <Route path="/intake"       element={<Intake />}                       />
+          <Route path="/faq"          element={<FAQ isDark={isDark} />}          />
+          <Route path="/consultation" element={<Consultation isDark={isDark} />} />
         </Routes>
       </div>
       <Footer isDark={isDark} />
