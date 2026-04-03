@@ -3,6 +3,9 @@ import { initReactI18next } from 'react-i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import HttpBackend from 'i18next-http-backend'
 
+const isProd = import.meta.env.PROD
+const base = isProd ? '/szewczyk-law' : ''
+
 i18n
   .use(HttpBackend)
   .use(LanguageDetector)
@@ -13,7 +16,7 @@ i18n
     ns: ['translation'],
     defaultNS: 'translation',
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json',
+      loadPath: `${base}/locales/{{lng}}/{{ns}}.json`,
     },
     detection: {
       order: ['localStorage', 'navigator'],
