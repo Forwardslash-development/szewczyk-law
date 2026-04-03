@@ -1,0 +1,22 @@
+{
+  "nav": {
+    "home":         "Home",
+    "services":     "Services",
+    "about":        "About",
+    "contact":      "Contact",
+    "intake":       "Start Your Case",
+    "faq":          "FAQ",
+    "consultation": "Free Consultation"
+  },
+  "hero": {
+    "headline":    "Injured? We Fight For You.",
+    "subheadline": "Personal injury law for the people of Illinois.",
+    "cta_primary": "Get a Free Consultation",
+    "cta_secondary": "See How We Can Help"
+  },
+  "trust": {
+    "no_fee": "No fee unless we win",
+    "free_consult": "Free consultation",
+    "available": "Available 24/7"
+  }
+}
