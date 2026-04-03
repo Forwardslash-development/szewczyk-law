@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Strona główna",
+    "services": "Usługi",
+    "about": "O nas",
+    "contact": "Kontakt",
+    "intake": "Rozpocznij sprawę",
+    "faq": "FAQ",
+    "consultation": "Bezpłatna konsultacja"
+  },
+  "hero": {
+    "headline": "Prawnik od obrażeń osobistych w Chicago — Po twojej stronie",
+    "subheadline": "Obsługujemy rodziny z Illinois od ponad [X] lat. Bez opłat, jeśli nie wygramy.",
+    "cta_primary": "Uzyskaj bezpłatną konsultację",
+    "cta_secondary": "Zobacz jak możemy pomóc"
+  },
+  "trust": {
+    "no_fee": "Bez opłat, jeśli nie wygramy",
+    "free_consult": "Bezpłatna konsultacja",
+    "available": "Dostępny 24/7",
+    "licensed": "Licencjonowany w Illinois"
+  },
+  "services": {
+    "title": "Jak możemy pomóc",
+    "subtitle": "Obsługujemy wszystkie rodzaje spraw o obrażenia osobiste w Illinois"
+  },
+  "practice": {
+    "car_title": "Wypadki samochodowe i ciężarówkowe",
+    "car_desc": "Ranny w kolizji? Zajmujemy się wszystkimi negocjacjami z ubezpieczycielami i walczymy o maksymalne odszkodowanie.",
+    "medical_title": "Błędy medyczne",
+    "medical_desc": "Gdy pracownicy służby zdrowia zawodzą pacjentów, pociągamy ich do odpowiedzialności i dążymy do sprawiedliwości.",
+    "workplace_title": "Obrażenia w miejscu pracy",
+    "workplace_desc": "Ranny w pracy? Masz prawa. Prowadzimy sprawy o odszkodowanie pracownicze i roszczenia wobec osób trzecich.",
+    "slip_title": "Poślizgnięcia i upadki",
+    "slip_desc": "Właściciele nieruchomości mają obowiązek utrzymania bezpiecznych warunków. Gdy zawodzą, dbamy o Twoje odszkodowanie.",
+    "wrongful_title": "Śmierć na skutek zaniedbania",
+    "wrongful_desc": "Stoimy po stronie rodzin, które straciły bliskich na skutek zaniedbania, walcząc o należną im sprawiedliwość.",
+    "product_title": "Odpowiedzialność za produkt",
+    "product_desc": "Wadliwe produkty powodują poważne szkody. Pociągamy producentów i dystrybutorów do odpowiedzialności.",
+    "view_all": "Zobacz wszystkie obszary praktyki"
+  },
+  "phone_bar": {
+    "call_now": "Ranny? Zadzwoń teraz —",
+    "tagline": "· Bezpłatna konsultacja · Dostępny 24/7"
+  },
+  "cta": {
+    "ready_title": "Gotowy do rozmowy?",
+    "ready_desc": "Pierwsza konsultacja jest całkowicie bezpłatna. Bez zobowiązań, bez presji — tylko odpowiedzi.",
+    "get_consult": "Uzyskaj bezpłatną konsultację"
+  },
+  "footer": {
+    "tagline": "Prawo dotyczące obrażeń osobistych dla rodzin z Illinois. Bez opłat, jeśli nie wygramy.",
+    "we_speak": "Mówimy w językach:",
+    "practice_areas": "Obszary praktyki",
+    "quick_links": "Szybkie linki",
+    "contact": "Kontakt",
+    "disclaimer": "Ta strona internetowa służy wyłącznie celom informacyjnym i nie stanowi porady prawnej. Odwiedzenie tej strony nie tworzy relacji adwokat-klient.",
+    "rights": "Wszelkie prawa zastrzeżone.",
+    "licensed": "Licencjonowany w Illinois · Reklama prawnicza"
+  }
+}

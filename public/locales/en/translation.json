@@ -1,28 +1,62 @@
 {
   "nav": {
-    "home":         "Home",
-    "services":     "Services",
-    "about":        "About",
-    "contact":      "Contact",
-    "intake":       "Start Your Case",
-    "faq":          "FAQ",
+    "home": "Home",
+    "services": "Services",
+    "about": "About",
+    "contact": "Contact",
+    "intake": "Start Your Case",
+    "faq": "FAQ",
     "consultation": "Free Consultation"
   },
   "hero": {
-    "headline":      "Chicago's Personal Injury Lawyer — On Your Side",
-    "subheadline":   "Serving Illinois families for over [X] years. No fee unless we win.",
-    "cta_primary":   "Get a Free Consultation",
+    "headline": "Chicago's Personal Injury Lawyer — On Your Side",
+    "subheadline": "Serving Illinois families for over [X] years. No fee unless we win.",
+    "cta_primary": "Get a Free Consultation",
     "cta_secondary": "See How We Can Help",
-    "note":          "PLACEHOLDER — needs Conrad's review before launch"
+    "note": "PLACEHOLDER — needs Conrad's review before launch"
   },
   "trust": {
-    "no_fee":      "No fee unless we win",
+    "no_fee": "No fee unless we win",
     "free_consult": "Free consultation",
-    "available":   "Available 24/7",
-    "licensed":    "Licensed in Illinois"
+    "available": "Available 24/7",
+    "licensed": "Licensed in Illinois"
   },
   "services": {
-    "title":    "How We Can Help",
+    "title": "How We Can Help",
     "subtitle": "We handle all types of personal injury cases across Illinois"
+  },
+  "practice": {
+    "car_title": "Car and Truck Accidents",
+    "car_desc": "Injured in a collision? We handle all insurance negotiations and fight for maximum compensation.",
+    "medical_title": "Medical Malpractice",
+    "medical_desc": "When healthcare providers fail their patients, we hold them accountable and pursue justice.",
+    "workplace_title": "Workplace Injuries",
+    "workplace_desc": "Hurt on the job? You have rights. We navigate workers comp and third-party claims.",
+    "slip_title": "Slip and Fall",
+    "slip_desc": "Property owners have a duty of care. When they fail, we make sure you are made whole.",
+    "wrongful_title": "Wrongful Death",
+    "wrongful_desc": "We stand with families who have lost loved ones due to negligence, fighting for the justice they deserve.",
+    "product_title": "Product Liability",
+    "product_desc": "Defective products cause serious harm. We hold manufacturers and distributors responsible.",
+    "view_all": "View All Practice Areas"
+  },
+  "phone_bar": {
+    "call_now": "Injured? Call us now —",
+    "tagline": "· Free consultation · Available 24/7"
+  },
+  "cta": {
+    "ready_title": "Ready to Talk?",
+    "ready_desc": "Your first consultation is completely free. No obligation, no pressure — just answers.",
+    "get_consult": "Get a Free Consultation"
+  },
+  "footer": {
+    "tagline": "Personal injury law for the people of Illinois. No fee unless we win your case.",
+    "we_speak": "We speak:",
+    "practice_areas": "Practice Areas",
+    "quick_links": "Quick Links",
+    "contact": "Contact",
+    "disclaimer": "This website is for general informational purposes only and does not constitute legal advice. No attorney-client relationship is formed by visiting this site or submitting a contact form. Past results do not guarantee future outcomes. Conrad Szewczyk is licensed to practice law in the State of Illinois.",
+    "rights": "All rights reserved.",
+    "licensed": "Licensed in Illinois · Attorney Advertising"
   }
 }

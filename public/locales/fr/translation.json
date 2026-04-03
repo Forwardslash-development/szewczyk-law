@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Accueil",
+    "services": "Services",
+    "about": "À propos",
+    "contact": "Contact",
+    "intake": "Commencer votre dossier",
+    "faq": "FAQ",
+    "consultation": "Consultation gratuite"
+  },
+  "hero": {
+    "headline": "L'avocat en dommages corporels de Chicago — À vos côtés",
+    "subheadline": "Au service des familles de l'Illinois depuis plus de [X] ans. Aucun frais sauf si nous gagnons.",
+    "cta_primary": "Obtenir une consultation gratuite",
+    "cta_secondary": "Voir comment nous pouvons aider"
+  },
+  "trust": {
+    "no_fee": "Aucun frais sauf si nous gagnons",
+    "free_consult": "Consultation gratuite",
+    "available": "Disponible 24h/24 et 7j/7",
+    "licensed": "Agréé en Illinois"
+  },
+  "services": {
+    "title": "Comment nous pouvons vous aider",
+    "subtitle": "Nous traitons tous les types de dommages corporels en Illinois"
+  },
+  "practice": {
+    "car_title": "Accidents de voiture et de camion",
+    "car_desc": "Blessé dans une collision ? Nous gérons toutes les négociations avec les assurances et luttons pour une compensation maximale.",
+    "medical_title": "Faute médicale",
+    "medical_desc": "Lorsque les prestataires de soins de santé manquent à leurs devoirs envers les patients, nous les tenons responsables.",
+    "workplace_title": "Blessures au travail",
+    "workplace_desc": "Blessé au travail ? Vous avez des droits. Nous gérons les demandes d'indemnisation des travailleurs.",
+    "slip_title": "Glissades et chutes",
+    "slip_desc": "Les propriétaires ont le devoir de maintenir des conditions sécuritaires. Quand ils échouent, nous vous défendons.",
+    "wrongful_title": "Décès par négligence",
+    "wrongful_desc": "Nous soutenons les familles qui ont perdu des proches par négligence, en luttant pour la justice qu'elles méritent.",
+    "product_title": "Responsabilité du fait des produits",
+    "product_desc": "Les produits défectueux causent des préjudices graves. Nous tenons les fabricants et distributeurs responsables.",
+    "view_all": "Voir tous les domaines de pratique"
+  },
+  "phone_bar": {
+    "call_now": "Blessé ? Appelez-nous maintenant —",
+    "tagline": "· Consultation gratuite · Disponible 24h/24"
+  },
+  "cta": {
+    "ready_title": "Prêt à parler ?",
+    "ready_desc": "Votre première consultation est entièrement gratuite. Sans engagement, sans pression — juste des réponses.",
+    "get_consult": "Obtenir une consultation gratuite"
+  },
+  "footer": {
+    "tagline": "Droit des dommages corporels pour les familles de l'Illinois. Aucun frais sauf si nous gagnons.",
+    "we_speak": "Nous parlons :",
+    "practice_areas": "Domaines de pratique",
+    "quick_links": "Liens rapides",
+    "contact": "Contact",
+    "disclaimer": "Ce site web est fourni à titre informatif uniquement et ne constitue pas un conseil juridique. Aucune relation avocat-client n'est créée par la visite de ce site.",
+    "rights": "Tous droits réservés.",
+    "licensed": "Agréé en Illinois · Publicité d'avocat"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "nav": {
+    "home": "Inicio",
+    "services": "Servicios",
+    "about": "Nosotros",
+    "contact": "Contacto",
+    "intake": "Iniciar su caso",
+    "faq": "Preguntas frecuentes",
+    "consultation": "Consulta gratuita"
+  },
+  "hero": {
+    "headline": "El abogado de lesiones personales de Chicago — De su lado",
+    "subheadline": "Sirviendo a las familias de Illinois por más de [X] años. Sin honorarios a menos que ganemos.",
+    "cta_primary": "Obtener una consulta gratuita",
+    "cta_secondary": "Ver cómo podemos ayudar"
+  },
+  "trust": {
+    "no_fee": "Sin honorarios a menos que ganemos",
+    "free_consult": "Consulta gratuita",
+    "available": "Disponible 24/7",
+    "licensed": "Con licencia en Illinois"
+  },
+  "services": {
+    "title": "Cómo podemos ayudarle",
+    "subtitle": "Manejamos todo tipo de casos de lesiones personales en Illinois"
+  },
+  "practice": {
+    "car_title": "Accidentes de auto y camión",
+    "car_desc": "¿Lesionado en una colisión? Manejamos todas las negociaciones con seguros y luchamos por la máxima compensación.",
+    "medical_title": "Negligencia médica",
+    "medical_desc": "Cuando los proveedores de atención médica fallan a sus pacientes, los responsabilizamos y buscamos justicia.",
+    "workplace_title": "Lesiones laborales",
+    "workplace_desc": "¿Herido en el trabajo? Tiene derechos. Navegamos reclamaciones de compensación laboral y de terceros.",
+    "slip_title": "Resbalones y caídas",
+    "slip_desc": "Los propietarios tienen el deber de mantener condiciones seguras. Cuando fallan, nos aseguramos de que usted sea compensado.",
+    "wrongful_title": "Muerte por negligencia",
+    "wrongful_desc": "Estamos con las familias que han perdido seres queridos por negligencia, luchando por la justicia que merecen.",
+    "product_title": "Responsabilidad por productos",
+    "product_desc": "Los productos defectuosos causan daños graves. Responsabilizamos a los fabricantes y distribuidores.",
+    "view_all": "Ver todas las áreas de práctica"
+  },
+  "phone_bar": {
+    "call_now": "¿Lesionado? Llámenos ahora —",
+    "tagline": "· Consulta gratuita · Disponible 24/7"
+  },
+  "cta": {
+    "ready_title": "¿Listo para hablar?",
+    "ready_desc": "Su primera consulta es completamente gratuita. Sin obligación, sin presión — solo respuestas.",
+    "get_consult": "Obtener una consulta gratuita"
+  },
+  "footer": {
+    "tagline": "Derecho de lesiones personales para las familias de Illinois. Sin honorarios a menos que ganemos.",
+    "we_speak": "Hablamos:",
+    "practice_areas": "Áreas de práctica",
+    "quick_links": "Enlaces rápidos",
+    "contact": "Contacto",
+    "disclaimer": "Este sitio web es solo para fines informativos generales y no constituye asesoramiento legal. No se forma ninguna relación abogado-cliente al visitar este sitio o enviar un formulario de contacto.",
+    "rights": "Todos los derechos reservados.",
+    "licensed": "Con licencia en Illinois · Publicidad de abogados"
+  }
+}
