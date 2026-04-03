@@ -12,7 +12,7 @@ import JsonLD from './components/seo/JsonLD'
 import useDarkMode from './hooks/useDarkMode'
 import { useSEO } from './hooks/useSEO'
 
-const BASE = 'https://forwardslash-development.github.io/szewczyk-law'
+import { SITE_URL as BASE } from './config'
 
 const LEGAL_SERVICE_SCHEMA = {
   '@context': 'https://schema.org',

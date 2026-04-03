@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 
-const BASE_URL = 'https://forwardslash-development.github.io/szewczyk-law'
+import { SITE_URL as BASE_URL } from '../config'
 const OG_IMAGE = `${BASE_URL}/og-image.png`
 
 interface SEOProps {
