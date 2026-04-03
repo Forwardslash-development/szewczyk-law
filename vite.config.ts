@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
 export default defineConfig({
+  base: '/szewczyk-law/',
   plugins: [
     react(),
     tailwindcss(),
@@ -18,22 +19,22 @@ export default defineConfig({
         background_color: '#F8F5F0',
         display: 'standalone',
         orientation: 'portrait',
-        scope: '/',
-        start_url: '/',
+        scope: '/szewczyk-law/',
+        start_url: '/szewczyk-law/',
         categories: ['legal', 'business'],
         icons: [
           {
-            src: '/icons/icon-192.png',
+            src: '/szewczyk-law/icons/icon-192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/icons/icon-512.png',
+            src: '/szewczyk-law/icons/icon-512.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: '/icons/icon-512-maskable.png',
+            src: '/szewczyk-law/icons/icon-512-maskable.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
@@ -43,19 +44,19 @@ export default defineConfig({
           {
             name: 'Free Consultation',
             short_name: 'Consultation',
-            url: '/consultation',
+            url: '/szewczyk-law/consultation',
             description: 'Schedule a free consultation',
           },
           {
             name: 'Start Your Case',
             short_name: 'Intake',
-            url: '/intake',
+            url: '/szewczyk-law/intake',
             description: 'Begin your case intake form',
           },
           {
             name: 'Contact Us',
             short_name: 'Contact',
-            url: '/contact',
+            url: '/szewczyk-law/contact',
             description: 'Get in touch with our office',
           },
         ],
@@ -72,9 +73,7 @@ export default defineConfig({
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365,
               },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
           {
@@ -86,9 +85,7 @@ export default defineConfig({
                 maxEntries: 10,
                 maxAgeSeconds: 60 * 60 * 24 * 365,
               },
-              cacheableResponse: {
-                statuses: [0, 200],
-              },
+              cacheableResponse: { statuses: [0, 200] },
             },
           },
           {
@@ -104,9 +101,7 @@ export default defineConfig({
           },
         ],
       },
-      devOptions: {
-        enabled: true,
-      },
+      devOptions: { enabled: true },
     }),
   ],
 })
