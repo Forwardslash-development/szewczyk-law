@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useTranslation } from 'react-i18next'
 import { Phone, Mail, MapPin, Clock, ArrowRight, CheckCircle } from 'lucide-react'
 
 interface ContactProps {
@@ -15,7 +14,7 @@ const INITIAL_FORM = {
 }
 
 export default function Contact({ isDark }: ContactProps) {
-  const { t } = useTranslation()
+
   const [form, setForm]       = useState(INITIAL_FORM)
   const [submitted, setSubmitted] = useState(false)
   const [errors, setErrors]   = useState<Partial<typeof INITIAL_FORM>>({})
