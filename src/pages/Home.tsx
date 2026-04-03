@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowRight, CheckCircle, Phone } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { AnimatedSection, staggerContainer, fadeUp, fadeIn } from '../components/ui/AnimatedSection'
 
 interface HomeProps {
   isDark: boolean
@@ -38,28 +40,43 @@ export default function Home({ isDark }: HomeProps) {
 
       {/* Hero */}
       <section aria-label="Hero" style={{ background: heroBg, transition: 'background 0.2s', padding: '80px 24px 72px' }}>
-        <div style={{ maxWidth: '760px', margin: '0 auto', textAlign: 'center' }}>
-          <div style={{
+        <motion.div
+          style={{ maxWidth: '760px', margin: '0 auto', textAlign: 'center' }}
+          variants={staggerContainer}
+          initial="hidden"
+          animate="show"
+        >
+          {/* Overline */}
+          <motion.div variants={fadeUp} style={{
             fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
             color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '20px',
           }}>
             Personal Injury Law · Chicago, Illinois
-          </div>
-          <h1 style={{
+          </motion.div>
+
+          {/* Headline */}
+          <motion.h1 variants={fadeUp} style={{
             fontFamily: 'Playfair Display, Georgia, serif',
             fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 700,
             color: '#FFFFFF', lineHeight: 1.15, marginBottom: '20px', letterSpacing: '-0.5px',
           }}>
             {t('hero.headline')}
-          </h1>
-          <p style={{
+          </motion.h1>
+
+          {/* Subheadline */}
+          <motion.p variants={fadeUp} style={{
             fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 18px)',
             fontWeight: 400, color: 'rgba(255,255,255,0.75)', lineHeight: 1.7,
             maxWidth: '580px', margin: '0 auto 36px',
           }}>
             {t('hero.subheadline')}
-          </p>
-          <div style={{ display: 'flex', gap: '12px', justifyContent: 'center', flexWrap: 'wrap', marginBottom: '48px' }}>
+          </motion.p>
+
+          {/* CTAs */}
+          <motion.div variants={fadeUp} style={{
+            display: 'flex', gap: '12px', justifyContent: 'center',
+            flexWrap: 'wrap', marginBottom: '48px',
+          }}>
             <NavLink to="/consultation" style={{
               fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
               background: '#C0392B', color: '#ffffff', padding: '13px 28px',
@@ -77,10 +94,15 @@ export default function Home({ isDark }: HomeProps) {
             }}>
               {t('hero.cta_secondary')}
             </NavLink>
-          </div>
-          <div style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          </motion.div>
+
+          {/* Trust badges */}
+          <motion.div
+            variants={staggerContainer}
+            style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}
+          >
             {TRUST_BADGES.map(({ key }) => (
-              <div key={key} style={{
+              <motion.div key={key} variants={fadeIn} style={{
                 display: 'inline-flex', alignItems: 'center', gap: '6px',
                 padding: '6px 14px', background: 'rgba(255,255,255,0.07)',
                 border: '1px solid rgba(255,255,255,0.12)', borderRadius: '20px',
@@ -89,10 +111,10 @@ export default function Home({ isDark }: HomeProps) {
               }}>
                 <CheckCircle size={12} color="#C9A84C" strokeWidth={2} />
                 {t(key)}
-              </div>
+              </motion.div>
             ))}
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
 
       {/* Phone bar */}
@@ -102,7 +124,12 @@ export default function Home({ isDark }: HomeProps) {
           display: 'flex', alignItems: 'center', justifyContent: 'center',
           gap: '10px', flexWrap: 'wrap',
         }}>
-          <Phone size={15} color="rgba(255,255,255,0.9)" strokeWidth={1.5} />
+          <motion.div
+            animate={{ scale: [1, 1.15, 1] }}
+            transition={{ duration: 1.8, repeat: Infinity, repeatDelay: 3, ease: 'easeInOut' }}
+          >
+            <Phone size={15} color="rgba(255,255,255,0.9)" strokeWidth={1.5} />
+          </motion.div>
           <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 500, color: '#ffffff' }}>
             {t('phone_bar.call_now')}
           </span>
@@ -121,7 +148,8 @@ export default function Home({ isDark }: HomeProps) {
       {/* Practice Areas */}
       <section aria-label="Practice areas" style={{ background: sectionBg, padding: '72px 24px', transition: 'background 0.2s' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+
+          <AnimatedSection style={{ textAlign: 'center', marginBottom: '48px' }}>
             <div style={{
               fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
               color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '12px',
@@ -141,55 +169,67 @@ export default function Home({ isDark }: HomeProps) {
             }}>
               {t('services.subtitle')}
             </p>
-          </div>
+          </AnimatedSection>
 
-          <div style={{
-            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px',
-          }}>
+          {/* Cards grid with stagger */}
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '20px',
+            }}
+          >
             {PRACTICE_AREA_KEYS.map(({ icon, titleKey, descKey }) => (
-              <NavLink
-                key={titleKey}
-                to="/services"
-                style={{
-                  background: cardBg, border: `1px solid ${cardBorder}`,
-                  borderRadius: '8px', padding: '24px', textDecoration: 'none',
-                  display: 'block', transition: 'border-color 0.15s, box-shadow 0.15s, background 0.2s',
-                }}
-                onMouseEnter={e => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.boxShadow = '0 4px 24px rgba(27,46,75,0.10)'
-                  el.style.borderColor = '#C9A84C'
-                }}
-                onMouseLeave={e => {
-                  const el = e.currentTarget as HTMLElement
-                  el.style.boxShadow = 'none'
-                  el.style.borderColor = cardBorder
-                }}
-              >
-                <div style={{
-                  fontSize: '24px', marginBottom: '12px', width: '44px', height: '44px',
-                  background: isDark ? 'rgba(201,168,76,0.1)' : '#F0EBE3',
-                  borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                }}>
-                  {icon}
-                </div>
-                <h3 style={{
-                  fontFamily: 'Playfair Display, Georgia, serif', fontSize: '17px', fontWeight: 600,
-                  color: headingColor, marginBottom: '8px', transition: 'color 0.2s',
-                }}>
-                  {t(titleKey)}
-                </h3>
-                <p style={{
-                  fontFamily: 'Inter, sans-serif', fontSize: '13px', color: bodyColor,
-                  lineHeight: 1.7, margin: 0,
-                }}>
-                  {t(descKey)}
-                </p>
-              </NavLink>
+              <motion.div key={titleKey} variants={fadeUp}>
+                <NavLink
+                  to="/services"
+                  style={{
+                    background: cardBg, border: `1px solid ${cardBorder}`,
+                    borderRadius: '8px', padding: '24px', textDecoration: 'none',
+                    display: 'block', transition: 'border-color 0.15s, background 0.2s',
+                  }}
+                  onMouseEnter={e => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.boxShadow = '0 8px 32px rgba(27,46,75,0.12)'
+                    el.style.borderColor = '#C9A84C'
+                    el.style.transform = 'translateY(-3px)'
+                  }}
+                  onMouseLeave={e => {
+                    const el = e.currentTarget as HTMLElement
+                    el.style.boxShadow = 'none'
+                    el.style.borderColor = cardBorder
+                    el.style.transform = 'translateY(0)'
+                  }}
+                >
+                  <div style={{
+                    fontSize: '24px', marginBottom: '12px', width: '44px', height: '44px',
+                    background: isDark ? 'rgba(201,168,76,0.1)' : '#F0EBE3',
+                    borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    {icon}
+                  </div>
+                  <h3 style={{
+                    fontFamily: 'Playfair Display, Georgia, serif', fontSize: '17px', fontWeight: 600,
+                    color: headingColor, marginBottom: '8px', transition: 'color 0.2s',
+                  }}>
+                    {t(titleKey)}
+                  </h3>
+                  <p style={{
+                    fontFamily: 'Inter, sans-serif', fontSize: '13px', color: bodyColor,
+                    lineHeight: 1.7, margin: 0,
+                  }}>
+                    {t(descKey)}
+                  </p>
+                </NavLink>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
 
-          <div style={{ textAlign: 'center', marginTop: '36px' }}>
+          <AnimatedSection style={{ textAlign: 'center', marginTop: '36px' }}>
             <NavLink to="/services" style={{
               fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 500,
               color: isDark ? '#C9A84C' : '#1B2E4B', textDecoration: 'none',
@@ -200,39 +240,43 @@ export default function Home({ isDark }: HomeProps) {
               {t('practice.view_all')}
               <ArrowRight size={14} strokeWidth={2} />
             </NavLink>
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
       {/* Bottom CTA */}
-      <section aria-label="Call to action" style={{ background: heroBg, padding: '64px 24px', textAlign: 'center', transition: 'background 0.2s' }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <h2 style={{
-            fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600,
-            color: '#ffffff', marginBottom: '14px',
-          }}>
-            {t('cta.ready_title')}
-          </h2>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '16px',
-            color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '28px',
-          }}>
-            {t('cta.ready_desc')}
-          </p>
-          <NavLink to="/consultation" style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
-            background: '#C0392B', color: '#ffffff', padding: '13px 32px',
-            borderRadius: '4px', textDecoration: 'none',
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-          }}>
-            {t('cta.get_consult')}
-            <ArrowRight size={16} strokeWidth={2} />
-          </NavLink>
-        </div>
-      </section>
+      <AnimatedSection>
+        <section aria-label="Call to action" style={{
+          background: heroBg, padding: '64px 24px',
+          textAlign: 'center', transition: 'background 0.2s',
+        }}>
+          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <h2 style={{
+              fontFamily: 'Playfair Display, Georgia, serif',
+              fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600,
+              color: '#ffffff', marginBottom: '14px',
+            }}>
+              {t('cta.ready_title')}
+            </h2>
+            <p style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '16px',
+              color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '28px',
+            }}>
+              {t('cta.ready_desc')}
+            </p>
+            <NavLink to="/consultation" style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
+              background: '#C0392B', color: '#ffffff', padding: '13px 32px',
+              borderRadius: '4px', textDecoration: 'none',
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+            }}>
+              {t('cta.get_consult')}
+              <ArrowRight size={16} strokeWidth={2} />
+            </NavLink>
+          </div>
+        </section>
+      </AnimatedSection>
 
     </div>
   )
 }
-// SEO is wired via App.tsx per-route
