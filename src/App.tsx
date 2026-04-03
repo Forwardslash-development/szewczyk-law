@@ -1,5 +1,6 @@
 import { Routes, Route } from 'react-router-dom'
 import Nav from './components/layout/Nav'
+import Footer from './components/layout/Footer'
 import PageWrapper from './components/layout/PageWrapper'
 import useDarkMode from './hooks/useDarkMode'
 
@@ -15,17 +16,20 @@ export default function App() {
   const { isDark, toggle } = useDarkMode()
 
   return (
-    <>
+    <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Nav isDark={isDark} onToggleDark={toggle} />
-      <Routes>
-        <Route path="/"             element={<Home />}         />
-        <Route path="/services"     element={<Services />}     />
-        <Route path="/about"        element={<About />}        />
-        <Route path="/contact"      element={<Contact />}      />
-        <Route path="/intake"       element={<Intake />}       />
-        <Route path="/faq"          element={<FAQ />}          />
-        <Route path="/consultation" element={<Consultation />} />
-      </Routes>
-    </>
+      <div style={{ flex: 1 }}>
+        <Routes>
+          <Route path="/"             element={<Home />}         />
+          <Route path="/services"     element={<Services />}     />
+          <Route path="/about"        element={<About />}        />
+          <Route path="/contact"      element={<Contact />}      />
+          <Route path="/intake"       element={<Intake />}       />
+          <Route path="/faq"          element={<FAQ />}          />
+          <Route path="/consultation" element={<Consultation />} />
+        </Routes>
+      </div>
+      <Footer isDark={isDark} />
+    </div>
   )
 }
