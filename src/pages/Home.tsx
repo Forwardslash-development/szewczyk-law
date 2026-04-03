@@ -16,12 +16,12 @@ const TRUST_BADGES = [
 ]
 
 const PRACTICE_AREA_KEYS = [
-  { icon: '🚗', titleKey: 'practice.car_title',      descKey: 'practice.car_desc'      },
-  { icon: '🏥', titleKey: 'practice.medical_title',  descKey: 'practice.medical_desc'  },
+  { icon: '🚗', titleKey: 'practice.car_title',       descKey: 'practice.car_desc'       },
+  { icon: '🏥', titleKey: 'practice.medical_title',   descKey: 'practice.medical_desc'   },
   { icon: '🏗', titleKey: 'practice.workplace_title', descKey: 'practice.workplace_desc' },
-  { icon: '🚶', titleKey: 'practice.slip_title',     descKey: 'practice.slip_desc'     },
-  { icon: '⚖',  titleKey: 'practice.wrongful_title', descKey: 'practice.wrongful_desc' },
-  { icon: '📦', titleKey: 'practice.product_title',  descKey: 'practice.product_desc'  },
+  { icon: '🚶', titleKey: 'practice.slip_title',      descKey: 'practice.slip_desc'      },
+  { icon: '⚖',  titleKey: 'practice.wrongful_title',  descKey: 'practice.wrongful_desc'  },
+  { icon: '📦', titleKey: 'practice.product_title',   descKey: 'practice.product_desc'   },
 ]
 
 export default function Home({ isDark }: HomeProps) {
@@ -46,7 +46,6 @@ export default function Home({ isDark }: HomeProps) {
           initial="hidden"
           animate="show"
         >
-          {/* Overline */}
           <motion.div variants={fadeUp} style={{
             fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
             color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '20px',
@@ -54,7 +53,6 @@ export default function Home({ isDark }: HomeProps) {
             Personal Injury Law · Chicago, Illinois
           </motion.div>
 
-          {/* Headline */}
           <motion.h1 variants={fadeUp} style={{
             fontFamily: 'Playfair Display, Georgia, serif',
             fontSize: 'clamp(32px, 5vw, 56px)', fontWeight: 700,
@@ -63,7 +61,6 @@ export default function Home({ isDark }: HomeProps) {
             {t('hero.headline')}
           </motion.h1>
 
-          {/* Subheadline */}
           <motion.p variants={fadeUp} style={{
             fontFamily: 'Inter, sans-serif', fontSize: 'clamp(15px, 2vw, 18px)',
             fontWeight: 400, color: 'rgba(255,255,255,0.75)', lineHeight: 1.7,
@@ -72,7 +69,6 @@ export default function Home({ isDark }: HomeProps) {
             {t('hero.subheadline')}
           </motion.p>
 
-          {/* CTAs */}
           <motion.div variants={fadeUp} style={{
             display: 'flex', gap: '12px', justifyContent: 'center',
             flexWrap: 'wrap', marginBottom: '48px',
@@ -96,7 +92,6 @@ export default function Home({ isDark }: HomeProps) {
             </NavLink>
           </motion.div>
 
-          {/* Trust badges */}
           <motion.div
             variants={staggerContainer}
             style={{ display: 'flex', gap: '8px', justifyContent: 'center', flexWrap: 'wrap' }}
@@ -171,15 +166,15 @@ export default function Home({ isDark }: HomeProps) {
             </p>
           </AnimatedSection>
 
-          {/* Cards grid with stagger */}
           <motion.div
             variants={staggerContainer}
             initial="hidden"
             whileInView="show"
             viewport={{ once: true, margin: '-60px' }}
+            className="practice-grid"
             style={{
               display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gridTemplateColumns: 'repeat(3, 1fr)',
               gap: '20px',
             }}
           >
@@ -276,6 +271,15 @@ export default function Home({ isDark }: HomeProps) {
           </div>
         </section>
       </AnimatedSection>
+
+      <style>{`
+        @media (max-width: 1024px) {
+          .practice-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 640px) {
+          .practice-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
 
     </div>
   )

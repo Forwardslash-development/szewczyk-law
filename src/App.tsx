@@ -11,6 +11,7 @@ import Intake from './pages/Intake'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
 import JsonLD from './components/seo/JsonLD'
+import ScrollToTop from './components/ui/ScrollToTop'
 import useDarkMode from './hooks/useDarkMode'
 import { useSEO } from './hooks/useSEO'
 
@@ -140,6 +141,7 @@ export default function App() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <JsonLD data={LEGAL_SERVICE_SCHEMA} id="legal-service" />
+      <ScrollToTop />
       <SEOWrapper />
       <Nav isDark={isDark} onToggleDark={toggle} />
       <div style={{ flex: 1 }}>
