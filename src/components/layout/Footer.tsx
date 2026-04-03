@@ -83,6 +83,8 @@ export default function Footer({ isDark }: FooterProps) {
             <NavLink to="/contact"      style={linkStyle}>{t('nav.contact')}</NavLink>
             <NavLink to="/intake"       style={linkStyle}>{t('nav.intake')}</NavLink>
             <NavLink to="/consultation" style={linkStyle}>{t('nav.consultation')}</NavLink>
+            <NavLink to="/privacy"      style={linkStyle}>Privacy Policy</NavLink>
+            <NavLink to="/terms"        style={linkStyle}>Terms of Use</NavLink>
           </div>
 
           {/* Column 4 — Contact */}
@@ -133,7 +135,7 @@ export default function Footer({ isDark }: FooterProps) {
             © {new Date().getFullYear()} Conrad Szewczyk and Associates. {t('footer.rights')}
           </span>
           <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: mutedText }}>
-            {t('footer.licensed')}
+            {t('footer.licensed')} &nbsp;·&nbsp; <NavLink to="/privacy" style={{ color: mutedText, textDecoration: 'none' }}>Privacy</NavLink> &nbsp;·&nbsp; <NavLink to="/terms" style={{ color: mutedText, textDecoration: 'none' }}>Terms</NavLink>
           </span>
         </div>
       </div>

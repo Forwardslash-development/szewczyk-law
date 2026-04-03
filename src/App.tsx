@@ -8,6 +8,8 @@ import Services from './pages/Services'
 import FAQ from './pages/FAQ'
 import Consultation from './pages/Consultation'
 import Intake from './pages/Intake'
+import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 import JsonLD from './components/seo/JsonLD'
 import useDarkMode from './hooks/useDarkMode'
 import { useSEO } from './hooks/useSEO'
@@ -147,6 +149,8 @@ export default function App() {
           <Route path="/about"        element={<><JsonLD data={ATTORNEY_SCHEMA} id="attorney" /><About isDark={isDark} /></>} />
           <Route path="/contact"      element={<Contact isDark={isDark} />}      />
           <Route path="/intake"       element={<Intake isDark={isDark} />}       />
+          <Route path="/privacy"      element={<Privacy isDark={isDark} />}     />
+          <Route path="/terms"        element={<Terms isDark={isDark} />}       />
           <Route path="/faq"          element={<><JsonLD data={FAQ_SCHEMA} id="faq" /><FAQ isDark={isDark} /></>} />
           <Route path="/consultation" element={<Consultation isDark={isDark} />} />
         </Routes>
