@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 import { ArrowRight, ArrowLeft, CheckCircle, Save, Trash2 } from 'lucide-react'
 
 interface IntakeProps {
@@ -8,43 +9,29 @@ interface IntakeProps {
 const STORAGE_KEY = 'szewczyk-intake-draft'
 
 const INITIAL_FORM = {
-  // Step 1 — Contact
-  name:            '',
-  phone:           '',
-  email:           '',
-  language:        '',
-  contactMethod:   '',
-
-  // Step 2 — Incident
-  caseType:        '',
-  incidentDate:    '',
-  incidentLocation:'',
-  incidentDesc:    '',
-
-  // Step 3 — Injuries
-  injuryDesc:      '',
-  treatmentDate:   '',
-  treatingDoctor:  '',
-  hospital:        '',
-  ongoingTreatment:'',
-
-  // Step 4 — Other Parties
-  policeReport:    '',
-  reportNumber:    '',
-  ownInsurance:    '',
-  otherInsurance:  '',
-  otherPartyName:  '',
+  name:             '',
+  phone:            '',
+  email:            '',
+  language:         '',
+  contactMethod:    '',
+  caseType:         '',
+  incidentDate:     '',
+  incidentLocation: '',
+  incidentDesc:     '',
+  injuryDesc:       '',
+  treatmentDate:    '',
+  treatingDoctor:   '',
+  hospital:         '',
+  ongoingTreatment: '',
+  policeReport:     '',
+  reportNumber:     '',
+  ownInsurance:     '',
+  otherInsurance:   '',
+  otherPartyName:   '',
 }
 
-const STEPS = [
-  { number: 1, label: 'Contact Info'     },
-  { number: 2, label: 'Incident Details' },
-  { number: 3, label: 'Injuries'         },
-  { number: 4, label: 'Other Parties'    },
-  { number: 5, label: 'Review'           },
-]
-
 export default function Intake({ isDark }: IntakeProps) {
+  const { t } = useTranslation()
   const [step, setStep]           = useState(1)
   const [form, setForm]           = useState(INITIAL_FORM)
   const [errors, setErrors]       = useState<Partial<typeof INITIAL_FORM>>({})
@@ -63,7 +50,14 @@ export default function Intake({ isDark }: IntakeProps) {
   const mutedColor   = isDark ? 'rgba(255,255,255,0.45)' : '#9CA3AF'
   const dividerColor = isDark ? 'rgba(255,255,255,0.06)' : '#F0EBE3'
 
-  // Restore draft on mount
+  const STEPS = [
+    { number: 1, labelKey: 'intake.step1_label' },
+    { number: 2, labelKey: 'intake.step2_label' },
+    { number: 3, labelKey: 'intake.step3_label' },
+    { number: 4, labelKey: 'intake.step4_label' },
+    { number: 5, labelKey: 'intake.step5_label' },
+  ]
+
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY)
@@ -76,7 +70,6 @@ export default function Intake({ isDark }: IntakeProps) {
     } catch {}
   }, [])
 
-  // Auto-save on every change
   useEffect(() => {
     if (submitted) return
     try {
@@ -100,17 +93,17 @@ export default function Intake({ isDark }: IntakeProps) {
   function validate(s: number): Partial<typeof INITIAL_FORM> {
     const e: Partial<typeof INITIAL_FORM> = {}
     if (s === 1) {
-      if (!form.name.trim())  e.name  = 'Name is required'
-      if (!form.phone.trim()) e.phone = 'Phone number is required'
-      if (!form.email.trim()) e.email = 'Email is required'
+      if (!form.name.trim())  e.name  = t('intake.name_error')
+      if (!form.phone.trim()) e.phone = t('intake.phone_error')
+      if (!form.email.trim()) e.email = t('intake.email_error')
     }
     if (s === 2) {
-      if (!form.caseType.trim())     e.caseType     = 'Please select a case type'
-      if (!form.incidentDate.trim()) e.incidentDate = 'Please enter the incident date'
-      if (!form.incidentDesc.trim()) e.incidentDesc = 'Please describe the incident'
+      if (!form.caseType.trim())     e.caseType     = t('intake.case_type_error')
+      if (!form.incidentDate.trim()) e.incidentDate = t('intake.incident_date_error')
+      if (!form.incidentDesc.trim()) e.incidentDesc = t('intake.incident_desc_error')
     }
     if (s === 3) {
-      if (!form.injuryDesc.trim()) e.injuryDesc = 'Please describe your injuries'
+      if (!form.injuryDesc.trim()) e.injuryDesc = t('intake.injury_desc_error')
     }
     return e
   }
@@ -130,51 +123,29 @@ export default function Intake({ isDark }: IntakeProps) {
   }
 
   async function handleSubmit() {
-    // TODO: Integrate EmailJS here to send confirmation email to client
-    // and notification email to Conrad once Gmail is set up.
-    // Example:
-    // await emailjs.send('SERVICE_ID', 'TEMPLATE_ID', {
-    //   to_email: form.email,
-    //   client_name: form.name,
-    //   case_type: form.caseType,
-    //   ...
-    // }, 'PUBLIC_KEY')
+    // TODO: Integrate EmailJS here once Gmail is set up
     localStorage.removeItem(STORAGE_KEY)
     setSubmitted(true)
   }
 
   const inputStyle = (field: keyof typeof INITIAL_FORM) => ({
-    fontFamily: 'Inter, sans-serif',
-    fontSize: '14px',
-    padding: '10px 12px',
+    fontFamily: 'Inter, sans-serif', fontSize: '14px', padding: '10px 12px',
     border: `1.5px solid ${errors[field] ? '#C0392B' : inputBorder}`,
-    borderRadius: '4px',
-    color: isDark ? '#F9FAFB' : '#2C2C2C',
-    background: inputBg,
-    width: '100%',
-    outline: 'none',
-    transition: 'border-color 0.15s',
+    borderRadius: '4px', color: isDark ? '#F9FAFB' : '#2C2C2C',
+    background: inputBg, width: '100%', outline: 'none', transition: 'border-color 0.15s',
   })
 
   const labelStyle = {
-    fontFamily: 'Inter, sans-serif',
-    fontSize: '12px',
-    fontWeight: 600 as const,
-    color: labelColor,
-    display: 'block' as const,
-    marginBottom: '5px',
-    letterSpacing: '0.03em',
+    fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 600 as const,
+    color: labelColor, display: 'block' as const, marginBottom: '5px', letterSpacing: '0.03em',
   }
 
   const errorStyle = {
-    fontFamily: 'Inter, sans-serif',
-    fontSize: '11px',
-    color: '#C0392B',
-    marginTop: '4px',
-    display: 'block' as const,
+    fontFamily: 'Inter, sans-serif', fontSize: '11px',
+    color: '#C0392B', marginTop: '4px', display: 'block' as const,
   }
 
-  const fieldGroup = (children: React.ReactNode) => (
+  const fg = (children: React.ReactNode) => (
     <div style={{ marginBottom: '16px' }}>{children}</div>
   )
 
@@ -184,15 +155,10 @@ export default function Intake({ isDark }: IntakeProps) {
     </div>
   )
 
-  const reviewRow = (label: string, value: string) => value ? (
-    <div style={{
-      display: 'flex',
-      gap: '16px',
-      padding: '10px 0',
-      borderBottom: `1px solid ${dividerColor}`,
-    }}>
+  const reviewRow = (labelKey: string, value: string) => value ? (
+    <div style={{ display: 'flex', gap: '16px', padding: '10px 0', borderBottom: `1px solid ${dividerColor}` }}>
       <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: mutedColor, minWidth: '160px', flexShrink: 0 }}>
-        {label}
+        {t(labelKey)}
       </span>
       <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: bodyColor, lineHeight: 1.5 }}>
         {value}
@@ -207,37 +173,34 @@ export default function Intake({ isDark }: IntakeProps) {
           <div style={{
             width: '72px', height: '72px',
             background: isDark ? 'rgba(201,168,76,0.1)' : '#F0EBE3',
-            borderRadius: '50%',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            margin: '0 auto 24px',
+            borderRadius: '50%', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', margin: '0 auto 24px',
           }}>
             <CheckCircle size={36} color="#C9A84C" strokeWidth={1.5} />
           </div>
           <h2 style={{
-            fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: '32px', fontWeight: 600,
-            color: headingColor, marginBottom: '16px',
+            fontFamily: 'Playfair Display, Georgia, serif', fontSize: '32px',
+            fontWeight: 600, color: headingColor, marginBottom: '16px',
           }}>
-            Intake Form Submitted
+            {t('intake.success_title')}
           </h2>
           <p style={{
             fontFamily: 'Inter, sans-serif', fontSize: '15px',
             color: bodyColor, lineHeight: 1.7, marginBottom: '8px',
           }}>
-            Thank you, {form.name}. Your case information has been received.
-            Conrad will personally review your intake and be in touch within 24 hours.
+            {t('intake.success_desc')}
           </p>
           <p style={{
             fontFamily: 'Inter, sans-serif', fontSize: '13px',
             color: mutedColor, lineHeight: 1.7, marginBottom: '8px',
           }}>
-            [Email confirmation coming soon] — <strong style={{ color: bodyColor }}>{form.email}</strong>
+            {t('intake.success_email_note')} <strong style={{ color: bodyColor }}>{form.email}</strong>
           </p>
           <p style={{
             fontFamily: 'Inter, sans-serif', fontSize: '13px',
             color: mutedColor, lineHeight: 1.7, marginBottom: '32px',
           }}>
-            If your matter is urgent, call us at{' '}
+            {t('intake.success_urgent')}{' '}
             <a href="tel:+13125550100" style={{ color: '#C0392B', textDecoration: 'none', fontWeight: 500 }}>
               (312) 555-0100
             </a>
@@ -257,21 +220,20 @@ export default function Intake({ isDark }: IntakeProps) {
             fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
             color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
           }}>
-            Case Intake
+            {t('intake.overline')}
           </div>
           <h1 style={{
             fontFamily: 'Playfair Display, Georgia, serif',
             fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
             color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '600px',
           }}>
-            Start Your Case
+            {t('intake.title')}
           </h1>
           <p style={{
             fontFamily: 'Inter, sans-serif', fontSize: '16px',
             color: 'rgba(255,255,255,0.7)', maxWidth: '520px', lineHeight: 1.7,
           }}>
-            Complete this intake form so Conrad can review your case before your consultation.
-            Your information is confidential and securely handled.
+            {t('intake.subtitle')}
           </p>
         </div>
       </section>
@@ -285,19 +247,14 @@ export default function Intake({ isDark }: IntakeProps) {
             <div style={{
               background: isDark ? 'rgba(201,168,76,0.08)' : '#FDF9F0',
               border: `1px solid ${isDark ? 'rgba(201,168,76,0.2)' : '#E8D99A'}`,
-              borderRadius: '8px',
-              padding: '14px 18px',
-              marginBottom: '24px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'space-between',
-              gap: '12px',
-              flexWrap: 'wrap',
+              borderRadius: '8px', padding: '14px 18px', marginBottom: '24px',
+              display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+              gap: '12px', flexWrap: 'wrap',
             }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
                 <Save size={15} color="#C9A84C" strokeWidth={1.5} />
                 <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: bodyColor }}>
-                  Draft restored — your previous progress has been loaded.
+                  {t('intake.draft_restored')}
                 </span>
               </div>
               <button onClick={clearDraft} style={{
@@ -306,19 +263,13 @@ export default function Intake({ isDark }: IntakeProps) {
                 cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '5px',
               }}>
                 <Trash2 size={13} strokeWidth={1.5} />
-                Start fresh
+                {t('intake.start_fresh')}
               </button>
             </div>
           )}
 
           {/* Step indicator */}
-          <div style={{
-            display: 'flex',
-            alignItems: 'center',
-            marginBottom: '32px',
-            overflowX: 'auto',
-            paddingBottom: '4px',
-          }}>
+          <div style={{ display: 'flex', alignItems: 'center', marginBottom: '32px', overflowX: 'auto', paddingBottom: '4px' }}>
             {STEPS.map((s, i) => (
               <div key={s.number} style={{ display: 'flex', alignItems: 'center', flexShrink: 0 }}>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
@@ -328,18 +279,16 @@ export default function Intake({ isDark }: IntakeProps) {
                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                     fontFamily: 'Inter, sans-serif', fontSize: '12px', fontWeight: 600,
                     color: step >= s.number ? '#ffffff' : mutedColor,
-                    transition: 'background 0.2s',
-                    flexShrink: 0,
+                    transition: 'background 0.2s', flexShrink: 0,
                   }}>
                     {step > s.number ? '✓' : s.number}
                   </div>
                   <span style={{
                     fontFamily: 'Inter, sans-serif', fontSize: '11px',
                     color: step >= s.number ? headingColor : mutedColor,
-                    fontWeight: step === s.number ? 600 : 400,
-                    whiteSpace: 'nowrap',
+                    fontWeight: step === s.number ? 600 : 400, whiteSpace: 'nowrap',
                   }}>
-                    {s.label}
+                    {t(s.labelKey)}
                   </span>
                 </div>
                 {i < STEPS.length - 1 && (
@@ -360,37 +309,37 @@ export default function Intake({ isDark }: IntakeProps) {
             borderRadius: '8px', padding: '36px', transition: 'background 0.2s',
           }}>
 
-            {/* Step 1 — Contact Info */}
+            {/* Step 1 */}
             {step === 1 && (
               <>
                 <h2 style={{ fontFamily: 'Playfair Display, Georgia, serif', fontSize: '22px', fontWeight: 600, color: headingColor, marginBottom: '24px' }}>
-                  Your Contact Information
+                  {t('intake.step1_title')}
                 </h2>
                 {twoCol(<>
                   <div>
-                    <label style={labelStyle}>Full Name *</label>
+                    <label style={labelStyle}>{t('intake.name_label')} *</label>
                     <input type="text" placeholder="Jane Smith" value={form.name}
                       onChange={e => handleChange('name', e.target.value)} style={inputStyle('name')} />
                     {errors.name && <span style={errorStyle}>{errors.name}</span>}
                   </div>
                   <div>
-                    <label style={labelStyle}>Phone Number *</label>
+                    <label style={labelStyle}>{t('intake.phone_label')} *</label>
                     <input type="tel" placeholder="(312) 555-0100" value={form.phone}
                       onChange={e => handleChange('phone', e.target.value)} style={inputStyle('phone')} />
                     {errors.phone && <span style={errorStyle}>{errors.phone}</span>}
                   </div>
                 </>)}
-                {fieldGroup(<>
-                  <label style={labelStyle}>Email Address *</label>
+                {fg(<>
+                  <label style={labelStyle}>{t('intake.email_label')} *</label>
                   <input type="email" placeholder="jane@example.com" value={form.email}
                     onChange={e => handleChange('email', e.target.value)} style={inputStyle('email')} />
                   {errors.email && <span style={errorStyle}>{errors.email}</span>}
                 </>)}
                 {twoCol(<>
                   <div>
-                    <label style={labelStyle}>Preferred Language</label>
+                    <label style={labelStyle}>{t('intake.language_label')}</label>
                     <select value={form.language} onChange={e => handleChange('language', e.target.value)} style={inputStyle('language')}>
-                      <option value="">Select language...</option>
+                      <option value="">{t('intake.language_placeholder')}</option>
                       <option value="en">English</option>
                       <option value="es">Español</option>
                       <option value="pl">Polski</option>
@@ -399,54 +348,54 @@ export default function Intake({ isDark }: IntakeProps) {
                     </select>
                   </div>
                   <div>
-                    <label style={labelStyle}>Preferred Contact Method</label>
+                    <label style={labelStyle}>{t('intake.contact_method_label')}</label>
                     <select value={form.contactMethod} onChange={e => handleChange('contactMethod', e.target.value)} style={inputStyle('contactMethod')}>
-                      <option value="">No preference</option>
-                      <option value="phone">Phone call</option>
-                      <option value="email">Email</option>
-                      <option value="text">Text message</option>
+                      <option value="">{t('intake.contact_none')}</option>
+                      <option value="phone">{t('intake.contact_phone')}</option>
+                      <option value="email">{t('intake.contact_email')}</option>
+                      <option value="text">{t('intake.contact_text')}</option>
                     </select>
                   </div>
                 </>)}
               </>
             )}
 
-            {/* Step 2 — Incident Details */}
+            {/* Step 2 */}
             {step === 2 && (
               <>
                 <h2 style={{ fontFamily: 'Playfair Display, Georgia, serif', fontSize: '22px', fontWeight: 600, color: headingColor, marginBottom: '24px' }}>
-                  Incident Details
+                  {t('intake.step2_title')}
                 </h2>
-                {fieldGroup(<>
-                  <label style={labelStyle}>Type of Case *</label>
+                {fg(<>
+                  <label style={labelStyle}>{t('intake.case_type_label')} *</label>
                   <select value={form.caseType} onChange={e => handleChange('caseType', e.target.value)} style={inputStyle('caseType')}>
-                    <option value="">Select a case type...</option>
-                    <option value="car-accident">Car / Truck Accident</option>
-                    <option value="slip-fall">Slip &amp; Fall</option>
-                    <option value="workplace">Workplace Injury</option>
-                    <option value="medical">Medical Malpractice</option>
-                    <option value="wrongful-death">Wrongful Death</option>
-                    <option value="product">Product Liability</option>
-                    <option value="other">Other</option>
+                    <option value="">{t('intake.case_type_placeholder')}</option>
+                    <option value="car-accident">{t('intake.case_car')}</option>
+                    <option value="slip-fall">{t('intake.case_slip')}</option>
+                    <option value="workplace">{t('intake.case_workplace')}</option>
+                    <option value="medical">{t('intake.case_medical')}</option>
+                    <option value="wrongful-death">{t('intake.case_wrongful')}</option>
+                    <option value="product">{t('intake.case_product')}</option>
+                    <option value="other">{t('intake.case_other')}</option>
                   </select>
                   {errors.caseType && <span style={errorStyle}>{errors.caseType}</span>}
                 </>)}
                 {twoCol(<>
                   <div>
-                    <label style={labelStyle}>Date of Incident *</label>
+                    <label style={labelStyle}>{t('intake.incident_date_label')} *</label>
                     <input type="date" value={form.incidentDate}
                       onChange={e => handleChange('incidentDate', e.target.value)} style={inputStyle('incidentDate')} />
                     {errors.incidentDate && <span style={errorStyle}>{errors.incidentDate}</span>}
                   </div>
                   <div>
-                    <label style={labelStyle}>Location of Incident</label>
-                    <input type="text" placeholder="e.g. Chicago, IL / Intersection of..." value={form.incidentLocation}
+                    <label style={labelStyle}>{t('intake.incident_location_label')}</label>
+                    <input type="text" placeholder={t('intake.incident_location_placeholder')} value={form.incidentLocation}
                       onChange={e => handleChange('incidentLocation', e.target.value)} style={inputStyle('incidentLocation')} />
                   </div>
                 </>)}
-                {fieldGroup(<>
-                  <label style={labelStyle}>Describe What Happened *</label>
-                  <textarea rows={6} placeholder="Please describe the incident in as much detail as you can remember. What happened, when, and how?" value={form.incidentDesc}
+                {fg(<>
+                  <label style={labelStyle}>{t('intake.incident_desc_label')} *</label>
+                  <textarea rows={6} placeholder={t('intake.incident_desc_placeholder')} value={form.incidentDesc}
                     onChange={e => handleChange('incidentDesc', e.target.value)}
                     style={{ ...inputStyle('incidentDesc'), resize: 'vertical' }} />
                   {errors.incidentDesc && <span style={errorStyle}>{errors.incidentDesc}</span>}
@@ -454,94 +403,91 @@ export default function Intake({ isDark }: IntakeProps) {
               </>
             )}
 
-            {/* Step 3 — Injuries */}
+            {/* Step 3 */}
             {step === 3 && (
               <>
                 <h2 style={{ fontFamily: 'Playfair Display, Georgia, serif', fontSize: '22px', fontWeight: 600, color: headingColor, marginBottom: '24px' }}>
-                  Injuries &amp; Medical Treatment
+                  {t('intake.step3_title')}
                 </h2>
-                {fieldGroup(<>
-                  <label style={labelStyle}>Describe Your Injuries *</label>
-                  <textarea rows={4} placeholder="What injuries did you sustain? e.g. broken arm, back injury, head trauma..." value={form.injuryDesc}
+                {fg(<>
+                  <label style={labelStyle}>{t('intake.injury_desc_label')} *</label>
+                  <textarea rows={4} placeholder={t('intake.injury_desc_placeholder')} value={form.injuryDesc}
                     onChange={e => handleChange('injuryDesc', e.target.value)}
                     style={{ ...inputStyle('injuryDesc'), resize: 'vertical' }} />
                   {errors.injuryDesc && <span style={errorStyle}>{errors.injuryDesc}</span>}
                 </>)}
                 {twoCol(<>
                   <div>
-                    <label style={labelStyle}>Date of First Medical Treatment</label>
+                    <label style={labelStyle}>{t('intake.treatment_date_label')}</label>
                     <input type="date" value={form.treatmentDate}
                       onChange={e => handleChange('treatmentDate', e.target.value)} style={inputStyle('treatmentDate')} />
                   </div>
                   <div>
-                    <label style={labelStyle}>Treating Doctor / Clinic</label>
-                    <input type="text" placeholder="Dr. Name or clinic name" value={form.treatingDoctor}
+                    <label style={labelStyle}>{t('intake.treating_doctor_label')}</label>
+                    <input type="text" placeholder={t('intake.treating_doctor_placeholder')} value={form.treatingDoctor}
                       onChange={e => handleChange('treatingDoctor', e.target.value)} style={inputStyle('treatingDoctor')} />
                   </div>
                 </>)}
-                {fieldGroup(<>
-                  <label style={labelStyle}>Hospital or Facility</label>
-                  <input type="text" placeholder="e.g. Northwestern Memorial Hospital" value={form.hospital}
+                {fg(<>
+                  <label style={labelStyle}>{t('intake.hospital_label')}</label>
+                  <input type="text" placeholder={t('intake.hospital_placeholder')} value={form.hospital}
                     onChange={e => handleChange('hospital', e.target.value)} style={inputStyle('hospital')} />
                 </>)}
-                {fieldGroup(<>
-                  <label style={labelStyle}>Are You Still Receiving Treatment?</label>
+                {fg(<>
+                  <label style={labelStyle}>{t('intake.ongoing_treatment_label')}</label>
                   <select value={form.ongoingTreatment} onChange={e => handleChange('ongoingTreatment', e.target.value)} style={inputStyle('ongoingTreatment')}>
-                    <option value="">Select...</option>
-                    <option value="yes">Yes — ongoing treatment</option>
-                    <option value="no">No — treatment complete</option>
-                    <option value="not-yet">Not yet — have not sought treatment</option>
+                    <option value="">{t('intake.ongoing_select')}</option>
+                    <option value="yes">{t('intake.ongoing_yes')}</option>
+                    <option value="no">{t('intake.ongoing_no')}</option>
+                    <option value="not-yet">{t('intake.ongoing_not_yet')}</option>
                   </select>
                 </>)}
               </>
             )}
 
-            {/* Step 4 — Other Parties */}
+            {/* Step 4 */}
             {step === 4 && (
               <>
                 <h2 style={{ fontFamily: 'Playfair Display, Georgia, serif', fontSize: '22px', fontWeight: 600, color: headingColor, marginBottom: '24px' }}>
-                  Other Parties &amp; Insurance
+                  {t('intake.step4_title')}
                 </h2>
-                {fieldGroup(<>
-                  <label style={labelStyle}>Was a Police Report Filed?</label>
+                {fg(<>
+                  <label style={labelStyle}>{t('intake.police_report_label')}</label>
                   <select value={form.policeReport} onChange={e => handleChange('policeReport', e.target.value)} style={inputStyle('policeReport')}>
-                    <option value="">Select...</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
-                    <option value="unknown">Unknown</option>
+                    <option value="">{t('intake.ongoing_select')}</option>
+                    <option value="yes">{t('intake.police_yes')}</option>
+                    <option value="no">{t('intake.police_no')}</option>
+                    <option value="unknown">{t('intake.police_unknown')}</option>
                   </select>
                 </>)}
-                {form.policeReport === 'yes' && fieldGroup(<>
-                  <label style={labelStyle}>Police Report Number (if known)</label>
-                  <input type="text" placeholder="Report number" value={form.reportNumber}
+                {form.policeReport === 'yes' && fg(<>
+                  <label style={labelStyle}>{t('intake.report_number_label')}</label>
+                  <input type="text" placeholder={t('intake.report_number_placeholder')} value={form.reportNumber}
                     onChange={e => handleChange('reportNumber', e.target.value)} style={inputStyle('reportNumber')} />
                 </>)}
                 {twoCol(<>
                   <div>
-                    <label style={labelStyle}>Your Insurance Company</label>
-                    <input type="text" placeholder="e.g. State Farm" value={form.ownInsurance}
+                    <label style={labelStyle}>{t('intake.own_insurance_label')}</label>
+                    <input type="text" placeholder={t('intake.own_insurance_placeholder')} value={form.ownInsurance}
                       onChange={e => handleChange('ownInsurance', e.target.value)} style={inputStyle('ownInsurance')} />
                   </div>
                   <div>
-                    <label style={labelStyle}>Other Party's Insurance (if known)</label>
-                    <input type="text" placeholder="e.g. Allstate" value={form.otherInsurance}
+                    <label style={labelStyle}>{t('intake.other_insurance_label')}</label>
+                    <input type="text" placeholder={t('intake.other_insurance_placeholder')} value={form.otherInsurance}
                       onChange={e => handleChange('otherInsurance', e.target.value)} style={inputStyle('otherInsurance')} />
                   </div>
                 </>)}
-                {fieldGroup(<>
-                  <label style={labelStyle}>Other Party's Name (if known)</label>
-                  <input type="text" placeholder="Name of at-fault party" value={form.otherPartyName}
+                {fg(<>
+                  <label style={labelStyle}>{t('intake.other_party_label')}</label>
+                  <input type="text" placeholder={t('intake.other_party_placeholder')} value={form.otherPartyName}
                     onChange={e => handleChange('otherPartyName', e.target.value)} style={inputStyle('otherPartyName')} />
                 </>)}
                 <div style={{
                   background: isDark ? 'rgba(201,168,76,0.06)' : '#F8F5F0',
-                  borderLeft: '3px solid #C9A84C',
-                  padding: '12px 16px',
-                  borderRadius: '0 4px 4px 0',
+                  borderLeft: '3px solid #C9A84C', padding: '12px 16px', borderRadius: '0 4px 4px 0',
                 }}>
                   <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '12px', color: mutedColor, lineHeight: 1.7, fontStyle: 'italic', margin: 0 }}>
-                    Do not contact the other party's insurance company or sign any documents
-                    before speaking with Conrad. Insurance adjusters are trained to minimize payouts.
+                    {t('intake.insurance_warning')}
                   </p>
                 </div>
               </>
@@ -551,157 +497,134 @@ export default function Intake({ isDark }: IntakeProps) {
             {step === 5 && (
               <>
                 <h2 style={{ fontFamily: 'Playfair Display, Georgia, serif', fontSize: '22px', fontWeight: 600, color: headingColor, marginBottom: '8px' }}>
-                  Review Your Information
+                  {t('intake.step5_title')}
                 </h2>
                 <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '13px', color: mutedColor, marginBottom: '24px', lineHeight: 1.6 }}>
-                  Please review the information below before submitting. You can go back to edit any section.
+                  {t('intake.step5_subtitle')}
                 </p>
 
-                {/* Section: Contact */}
-                <div style={{ marginBottom: '24px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600, color: '#C9A84C', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-                      Contact Info
-                    </span>
-                    <button onClick={() => setStep(1)} style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: headingColor, background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
-                      Edit
-                    </button>
+                {[
+                  {
+                    sectionKey: 'intake.review_contact',
+                    stepNum: 1,
+                    rows: [
+                      ['intake.review_name', form.name],
+                      ['intake.review_phone', form.phone],
+                      ['intake.review_email', form.email],
+                      ['intake.review_language', form.language],
+                      ['intake.review_contact_method', form.contactMethod],
+                    ]
+                  },
+                  {
+                    sectionKey: 'intake.review_incident',
+                    stepNum: 2,
+                    rows: [
+                      ['intake.review_case_type', form.caseType],
+                      ['intake.review_incident_date', form.incidentDate],
+                      ['intake.review_location', form.incidentLocation],
+                      ['intake.review_description', form.incidentDesc],
+                    ]
+                  },
+                  {
+                    sectionKey: 'intake.review_injuries',
+                    stepNum: 3,
+                    rows: [
+                      ['intake.review_injuries', form.injuryDesc],
+                      ['intake.review_treatment_date', form.treatmentDate],
+                      ['intake.review_doctor', form.treatingDoctor],
+                      ['intake.review_hospital', form.hospital],
+                      ['intake.review_ongoing', form.ongoingTreatment],
+                    ]
+                  },
+                  {
+                    sectionKey: 'intake.review_other',
+                    stepNum: 4,
+                    rows: [
+                      ['intake.review_police', form.policeReport],
+                      ['intake.review_report_num', form.reportNumber],
+                      ['intake.review_own_insurance', form.ownInsurance],
+                      ['intake.review_other_insurance', form.otherInsurance],
+                      ['intake.review_other_party', form.otherPartyName],
+                    ]
+                  },
+                ].map(({ sectionKey, stepNum, rows }) => (
+                  <div key={sectionKey} style={{ marginBottom: '24px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
+                      <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600, color: '#C9A84C', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
+                        {t(sectionKey)}
+                      </span>
+                      <button onClick={() => setStep(stepNum)} style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: headingColor, background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
+                        {t('intake.review_edit')}
+                      </button>
+                    </div>
+                    {rows.map(([labelKey, value]) => reviewRow(labelKey, value))}
                   </div>
-                  {reviewRow('Name', form.name)}
-                  {reviewRow('Phone', form.phone)}
-                  {reviewRow('Email', form.email)}
-                  {reviewRow('Language', form.language)}
-                  {reviewRow('Contact Method', form.contactMethod)}
-                </div>
+                ))}
 
-                {/* Section: Incident */}
-                <div style={{ marginBottom: '24px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600, color: '#C9A84C', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-                      Incident Details
-                    </span>
-                    <button onClick={() => setStep(2)} style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: headingColor, background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
-                      Edit
-                    </button>
-                  </div>
-                  {reviewRow('Case Type', form.caseType)}
-                  {reviewRow('Incident Date', form.incidentDate)}
-                  {reviewRow('Location', form.incidentLocation)}
-                  {reviewRow('Description', form.incidentDesc)}
-                </div>
-
-                {/* Section: Injuries */}
-                <div style={{ marginBottom: '24px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600, color: '#C9A84C', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-                      Injuries &amp; Treatment
-                    </span>
-                    <button onClick={() => setStep(3)} style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: headingColor, background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
-                      Edit
-                    </button>
-                  </div>
-                  {reviewRow('Injuries', form.injuryDesc)}
-                  {reviewRow('Treatment Date', form.treatmentDate)}
-                  {reviewRow('Treating Doctor', form.treatingDoctor)}
-                  {reviewRow('Hospital', form.hospital)}
-                  {reviewRow('Ongoing Treatment', form.ongoingTreatment)}
-                </div>
-
-                {/* Section: Other Parties */}
-                <div style={{ marginBottom: '28px' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '8px' }}>
-                    <span style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600, color: '#C9A84C', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
-                      Other Parties
-                    </span>
-                    <button onClick={() => setStep(4)} style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: headingColor, background: 'transparent', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
-                      Edit
-                    </button>
-                  </div>
-                  {reviewRow('Police Report', form.policeReport)}
-                  {reviewRow('Report Number', form.reportNumber)}
-                  {reviewRow('Your Insurance', form.ownInsurance)}
-                  {reviewRow('Other Insurance', form.otherInsurance)}
-                  {reviewRow('Other Party', form.otherPartyName)}
-                </div>
-
-                {/* Disclaimer */}
                 <div style={{
                   background: isDark ? 'rgba(201,168,76,0.06)' : '#F8F5F0',
-                  borderLeft: '3px solid #C9A84C',
-                  padding: '14px 18px',
-                  borderRadius: '0 4px 4px 0',
-                  marginBottom: '28px',
+                  borderLeft: '3px solid #C9A84C', padding: '14px 18px',
+                  borderRadius: '0 4px 4px 0', marginBottom: '28px',
                 }}>
                   <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '11px', color: mutedColor, lineHeight: 1.7, fontStyle: 'italic', margin: 0 }}>
-                    By submitting this form you confirm the information provided is accurate to the best of your knowledge.
-                    This submission is confidential and does not create an attorney-client relationship.
-                    A confirmation email will be sent to {form.email || 'your email address'}.
+                    {t('intake.disclaimer')}
                   </p>
                 </div>
               </>
             )}
 
-            {/* Navigation buttons */}
+            {/* Navigation */}
             <div style={{ display: 'flex', gap: '12px', marginTop: step === 5 ? '0' : '8px' }}>
               {step > 1 && (
                 <button onClick={handleBack} style={{
                   fontFamily: 'Inter, sans-serif', fontSize: '14px', fontWeight: 400,
-                  background: 'transparent', color: headingColor,
-                  padding: '12px 20px', borderRadius: '4px',
-                  border: `1.5px solid ${cardBorder}`, cursor: 'pointer',
+                  background: 'transparent', color: headingColor, padding: '12px 20px',
+                  borderRadius: '4px', border: `1.5px solid ${cardBorder}`, cursor: 'pointer',
                   display: 'flex', alignItems: 'center', gap: '6px', flexShrink: 0,
                 }}>
                   <ArrowLeft size={15} strokeWidth={2} />
-                  Back
+                  {t('intake.back_btn')}
                 </button>
               )}
               {step < 5 && (
                 <button onClick={handleNext} style={{
                   fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
-                  background: '#C0392B', color: '#ffffff',
-                  padding: '12px 28px', borderRadius: '4px', border: 'none',
-                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
-                  flex: 1, justifyContent: 'center',
+                  background: '#C0392B', color: '#ffffff', padding: '12px 28px',
+                  borderRadius: '4px', border: 'none', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'center',
                 }}>
-                  Continue
+                  {t('intake.continue_btn')}
                   <ArrowRight size={16} strokeWidth={2} />
                 </button>
               )}
               {step === 5 && (
                 <button onClick={handleSubmit} style={{
                   fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
-                  background: '#C0392B', color: '#ffffff',
-                  padding: '12px 28px', borderRadius: '4px', border: 'none',
-                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px',
-                  flex: 1, justifyContent: 'center',
+                  background: '#C0392B', color: '#ffffff', padding: '12px 28px',
+                  borderRadius: '4px', border: 'none', cursor: 'pointer',
+                  display: 'flex', alignItems: 'center', gap: '8px', flex: 1, justifyContent: 'center',
                 }}>
-                  Submit Intake Form
+                  {t('intake.submit_btn')}
                   <ArrowRight size={16} strokeWidth={2} />
                 </button>
               )}
             </div>
-
           </div>
 
-          {/* Auto-save notice */}
           <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '11px',
-            color: mutedColor, textAlign: 'center', marginTop: '16px',
+            fontFamily: 'Inter, sans-serif', fontSize: '11px', color: mutedColor,
+            textAlign: 'center', marginTop: '16px',
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '5px',
           }}>
             <Save size={11} strokeWidth={1.5} />
-            Progress is automatically saved to this device
+            {t('intake.autosave')}
           </p>
-
         </div>
       </section>
 
       <style>{`
-        @media (max-width: 560px) {
-          .form-row { grid-template-columns: 1fr !important; }
-        }
+        @media (max-width: 560px) { .form-row { grid-template-columns: 1fr !important; } }
       `}</style>
-
     </div>
   )
 }
