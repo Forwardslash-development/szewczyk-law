@@ -231,7 +231,7 @@ export default function Intake({ isDark }: IntakeProps) {
             fontFamily: 'Inter, sans-serif', fontSize: '13px',
             color: mutedColor, lineHeight: 1.7, marginBottom: '8px',
           }}>
-            A confirmation has been sent to <strong style={{ color: bodyColor }}>{form.email}</strong>
+            [Email confirmation coming soon] — <strong style={{ color: bodyColor }}>{form.email}</strong>
           </p>
           <p style={{
             fontFamily: 'Inter, sans-serif', fontSize: '13px',
