@@ -1,16 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
 import Nav from './components/layout/Nav'
 import Footer from './components/layout/Footer'
-import PageWrapper from './components/layout/PageWrapper'
 import Home from './pages/Home'
 import About from './pages/About'
 import Contact from './pages/Contact'
 import Services from './pages/Services'
 import FAQ from './pages/FAQ'
 import Consultation from './pages/Consultation'
+import Intake from './pages/Intake'
 import useDarkMode from './hooks/useDarkMode'
-
-const Intake = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Intake — coming soon</main></PageWrapper>
 
 export default function App() {
   const { isDark, toggle } = useDarkMode()
@@ -24,7 +22,7 @@ export default function App() {
           <Route path="/services"     element={<Services isDark={isDark} />}     />
           <Route path="/about"        element={<About isDark={isDark} />}        />
           <Route path="/contact"      element={<Contact isDark={isDark} />}      />
-          <Route path="/intake"       element={<Intake />}                       />
+          <Route path="/intake"       element={<Intake isDark={isDark} />}       />
           <Route path="/faq"          element={<FAQ isDark={isDark} />}          />
           <Route path="/consultation" element={<Consultation isDark={isDark} />} />
         </Routes>
