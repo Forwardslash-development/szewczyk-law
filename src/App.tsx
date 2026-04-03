@@ -1,6 +1,7 @@
 import { Routes, Route } from 'react-router-dom'
 import Nav from './components/layout/Nav'
 import PageWrapper from './components/layout/PageWrapper'
+import useDarkMode from './hooks/useDarkMode'
 
 const Home         = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Home</main></PageWrapper>
 const Services     = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Services</main></PageWrapper>
@@ -11,9 +12,11 @@ const FAQ          = () => <PageWrapper><main style={{ padding: '2rem 0' }}>FAQ<
 const Consultation = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Consultation</main></PageWrapper>
 
 export default function App() {
+  const { isDark, toggle } = useDarkMode()
+
   return (
     <>
-      <Nav />
+      <Nav isDark={isDark} onToggleDark={toggle} />
       <Routes>
         <Route path="/"             element={<Home />}         />
         <Route path="/services"     element={<Services />}     />
