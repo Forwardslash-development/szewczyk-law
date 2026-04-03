@@ -9,14 +9,20 @@
     "consultation": "Free Consultation"
   },
   "hero": {
-    "headline":    "Injured? We Fight For You.",
-    "subheadline": "Personal injury law for the people of Illinois.",
-    "cta_primary": "Get a Free Consultation",
-    "cta_secondary": "See How We Can Help"
+    "headline":      "Chicago's Personal Injury Lawyer — On Your Side",
+    "subheadline":   "Serving Illinois families for over [X] years. No fee unless we win.",
+    "cta_primary":   "Get a Free Consultation",
+    "cta_secondary": "See How We Can Help",
+    "note":          "PLACEHOLDER — needs Conrad's review before launch"
   },
   "trust": {
-    "no_fee": "No fee unless we win",
+    "no_fee":      "No fee unless we win",
     "free_consult": "Free consultation",
-    "available": "Available 24/7"
+    "available":   "Available 24/7",
+    "licensed":    "Licensed in Illinois"
+  },
+  "services": {
+    "title":    "How We Can Help",
+    "subtitle": "We handle all types of personal injury cases across Illinois"
   }
 }

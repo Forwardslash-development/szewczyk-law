@@ -2,9 +2,9 @@ import { Routes, Route } from 'react-router-dom'
 import Nav from './components/layout/Nav'
 import Footer from './components/layout/Footer'
 import PageWrapper from './components/layout/PageWrapper'
+import Home from './pages/Home'
 import useDarkMode from './hooks/useDarkMode'
 
-const Home         = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Home</main></PageWrapper>
 const Services     = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Services</main></PageWrapper>
 const About        = () => <PageWrapper><main style={{ padding: '2rem 0' }}>About</main></PageWrapper>
 const Contact      = () => <PageWrapper><main style={{ padding: '2rem 0' }}>Contact</main></PageWrapper>
@@ -20,7 +20,7 @@ export default function App() {
       <Nav isDark={isDark} onToggleDark={toggle} />
       <div style={{ flex: 1 }}>
         <Routes>
-          <Route path="/"             element={<Home />}         />
+          <Route path="/"             element={<Home isDark={isDark} />} />
           <Route path="/services"     element={<Services />}     />
           <Route path="/about"        element={<About />}        />
           <Route path="/contact"      element={<Contact />}      />
