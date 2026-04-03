@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://forwardslash-development.github.io/szewczyk-law/sitemap.xml

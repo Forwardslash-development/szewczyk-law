@@ -235,3 +235,4 @@ export default function Home({ isDark }: HomeProps) {
     </div>
   )
 }
+// SEO is wired via App.tsx per-route

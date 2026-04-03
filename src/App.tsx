@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, useLocation } from 'react-router-dom'
 import Nav from './components/layout/Nav'
 import Footer from './components/layout/Footer'
 import Home from './pages/Home'
@@ -8,22 +8,146 @@ import Services from './pages/Services'
 import FAQ from './pages/FAQ'
 import Consultation from './pages/Consultation'
 import Intake from './pages/Intake'
+import JsonLD from './components/seo/JsonLD'
 import useDarkMode from './hooks/useDarkMode'
+import { useSEO } from './hooks/useSEO'
+
+const BASE = 'https://forwardslash-development.github.io/szewczyk-law'
+
+const LEGAL_SERVICE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'LegalService',
+  name: 'Conrad Szewczyk & Associates',
+  description: 'Personal injury law firm serving Chicago, Cook County, and Chicagoland.',
+  url: BASE,
+  telephone: '+13125550100',
+  email: 'szewczyklaw@gmail.com',
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Chicago',
+    addressRegion: 'IL',
+    addressCountry: 'US',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: 41.8781,
+    longitude: -87.6298,
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Chicago', sameAs: 'https://www.wikidata.org/wiki/Q1297' },
+    { '@type': 'AdministrativeArea', name: 'Cook County' },
+    { '@type': 'AdministrativeArea', name: 'DuPage County' },
+    { '@type': 'AdministrativeArea', name: 'Lake County' },
+    { '@type': 'AdministrativeArea', name: 'Will County' },
+    { '@type': 'State', name: 'Illinois' },
+  ],
+  knowsLanguage: ['en', 'es', 'pl', 'fr', 'ar'],
+  priceRange: 'Free consultation. Contingency fee — no charge unless we win.',
+  openingHours: ['Mo-Fr 09:00-18:00'],
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Personal Injury Legal Services',
+    itemListElement: [
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Car & Truck Accident' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Medical Malpractice' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Workplace Injuries' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Slip & Fall' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Wrongful Death' } },
+      { '@type': 'Offer', itemOffered: { '@type': 'Service', name: 'Product Liability' } },
+    ],
+  },
+}
+
+const ATTORNEY_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Attorney',
+  name: 'Conrad Szewczyk',
+  jobTitle: 'Personal Injury Attorney',
+  worksFor: { '@type': 'LegalService', name: 'Conrad Szewczyk & Associates' },
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'Chicago',
+    addressRegion: 'IL',
+    addressCountry: 'US',
+  },
+  telephone: '+13125550100',
+  email: 'szewczyklaw@gmail.com',
+  url: `${BASE}/about`,
+  knowsLanguage: ['en', 'es', 'pl', 'fr', 'ar'],
+  alumniOf: '[Law School — to be filled]',
+  memberOf: [
+    { '@type': 'Organization', name: 'Illinois State Bar Association' },
+    { '@type': 'Organization', name: 'Chicago Bar Association' },
+  ],
+}
+
+const FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    { '@type': 'Question', name: 'How much does it cost to hire a personal injury attorney?', acceptedAnswer: { '@type': 'Answer', text: 'Nothing upfront. We work on a contingency fee basis — you pay nothing unless we win your case.' } },
+    { '@type': 'Question', name: 'How long do I have to file a personal injury claim in Illinois?', acceptedAnswer: { '@type': 'Answer', text: 'In Illinois, the statute of limitations for most personal injury cases is two years from the date of the injury.' } },
+    { '@type': 'Question', name: 'What types of compensation can I recover?', acceptedAnswer: { '@type': 'Answer', text: 'You may be entitled to compensation for medical expenses, lost wages, pain and suffering, emotional distress, property damage, and loss of enjoyment of life.' } },
+    { '@type': 'Question', name: 'Will my case go to trial?', acceptedAnswer: { '@type': 'Answer', text: 'Most personal injury cases settle before trial. However, we prepare every case as if it will go to trial.' } },
+    { '@type': 'Question', name: 'Who will be handling my case?', acceptedAnswer: { '@type': 'Answer', text: 'Conrad Szewczyk personally handles every case at this firm. You will not be passed off to a paralegal or junior associate.' } },
+  ],
+}
+
+function SEOWrapper() {
+  const location = useLocation()
+
+  const SEO_MAP: Record<string, { title: string; description: string }> = {
+    '/': {
+      title: 'Personal Injury Lawyer Chicago',
+      description: 'Conrad Szewczyk & Associates — Chicago personal injury lawyer serving Cook County and Chicagoland. Car accidents, slip and fall, workplace injuries. Free consultation. No fee unless we win.',
+    },
+    '/services': {
+      title: 'Personal Injury Practice Areas',
+      description: 'We handle car accidents, medical malpractice, workplace injuries, slip and fall, wrongful death, and product liability cases across Chicago and Cook County.',
+    },
+    '/about': {
+      title: 'About Conrad Szewczyk',
+      description: 'Meet Conrad Szewczyk, personal injury attorney serving Chicago and Chicagoland. Dedicated to fighting for injured individuals and families across Illinois.',
+    },
+    '/contact': {
+      title: 'Contact Us',
+      description: 'Contact Conrad Szewczyk & Associates. Reach us by phone, email, or contact form. We respond within 24 hours. Free consultation available.',
+    },
+    '/faq': {
+      title: 'Personal Injury Law FAQ',
+      description: 'Answers to common questions about personal injury law in Illinois. Contingency fees, statute of limitations, what compensation you can recover, and more.',
+    },
+    '/consultation': {
+      title: 'Free Consultation',
+      description: 'Schedule a free, confidential consultation with Conrad Szewczyk. No obligation, no pressure. No fee unless we win your case.',
+    },
+    '/intake': {
+      title: 'Start Your Case',
+      description: 'Begin your personal injury case intake with Conrad Szewczyk & Associates. Secure, confidential, available in English, Spanish, Polish, French, and Arabic.',
+    },
+  }
+
+  const seo = SEO_MAP[location.pathname] ?? SEO_MAP['/']
+  useSEO({ title: seo.title, description: seo.description, path: location.pathname })
+  return null
+}
 
 export default function App() {
   const { isDark, toggle } = useDarkMode()
 
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+      <JsonLD data={LEGAL_SERVICE_SCHEMA} id="legal-service" />
+      <SEOWrapper />
       <Nav isDark={isDark} onToggleDark={toggle} />
       <div style={{ flex: 1 }}>
         <Routes>
           <Route path="/"             element={<Home isDark={isDark} />}         />
           <Route path="/services"     element={<Services isDark={isDark} />}     />
-          <Route path="/about"        element={<About isDark={isDark} />}        />
+          <Route path="/about"        element={<><JsonLD data={ATTORNEY_SCHEMA} id="attorney" /><About isDark={isDark} /></>} />
           <Route path="/contact"      element={<Contact isDark={isDark} />}      />
           <Route path="/intake"       element={<Intake isDark={isDark} />}       />
-          <Route path="/faq"          element={<FAQ isDark={isDark} />}          />
+          <Route path="/faq"          element={<><JsonLD data={FAQ_SCHEMA} id="faq" /><FAQ isDark={isDark} /></>} />
           <Route path="/consultation" element={<Consultation isDark={isDark} />} />
         </Routes>
       </div>
