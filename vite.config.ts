@@ -3,8 +3,11 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 import { VitePWA } from 'vite-plugin-pwa'
 
+const isProd = process.env.NODE_ENV === 'production'
+const base = isProd ? '/szewczyk-law/' : '/'
+
 export default defineConfig({
-  base: '/szewczyk-law/',
+  base,
   plugins: [
     react(),
     tailwindcss(),
@@ -19,22 +22,22 @@ export default defineConfig({
         background_color: '#F8F5F0',
         display: 'standalone',
         orientation: 'portrait',
-        scope: '/szewczyk-law/',
-        start_url: '/szewczyk-law/',
+        scope: isProd ? '/szewczyk-law/' : '/',
+        start_url: isProd ? '/szewczyk-law/' : '/',
         categories: ['legal', 'business'],
         icons: [
           {
-            src: '/szewczyk-law/icons/icon-192.png',
+            src: isProd ? '/szewczyk-law/icons/icon-192.png' : '/icons/icon-192.png',
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: '/szewczyk-law/icons/icon-512.png',
+            src: isProd ? '/szewczyk-law/icons/icon-512.png' : '/icons/icon-512.png',
             sizes: '512x512',
             type: 'image/png',
           },
           {
-            src: '/szewczyk-law/icons/icon-512-maskable.png',
+            src: isProd ? '/szewczyk-law/icons/icon-512-maskable.png' : '/icons/icon-512-maskable.png',
             sizes: '512x512',
             type: 'image/png',
             purpose: 'maskable',
@@ -44,19 +47,19 @@ export default defineConfig({
           {
             name: 'Free Consultation',
             short_name: 'Consultation',
-            url: '/szewczyk-law/consultation',
+            url: isProd ? '/szewczyk-law/consultation' : '/consultation',
             description: 'Schedule a free consultation',
           },
           {
             name: 'Start Your Case',
             short_name: 'Intake',
-            url: '/szewczyk-law/intake',
+            url: isProd ? '/szewczyk-law/intake' : '/intake',
             description: 'Begin your case intake form',
           },
           {
             name: 'Contact Us',
             short_name: 'Contact',
-            url: '/szewczyk-law/contact',
+            url: isProd ? '/szewczyk-law/contact' : '/contact',
             description: 'Get in touch with our office',
           },
         ],
@@ -69,10 +72,7 @@ export default defineConfig({
             handler: 'CacheFirst',
             options: {
               cacheName: 'google-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365,
-              },
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },
@@ -81,10 +81,7 @@ export default defineConfig({
             handler: 'CacheFirst',
             options: {
               cacheName: 'gstatic-fonts-cache',
-              expiration: {
-                maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365,
-              },
+              expiration: { maxEntries: 10, maxAgeSeconds: 60 * 60 * 24 * 365 },
               cacheableResponse: { statuses: [0, 200] },
             },
           },
@@ -93,10 +90,7 @@ export default defineConfig({
             handler: 'CacheFirst',
             options: {
               cacheName: 'i18n-cache',
-              expiration: {
-                maxEntries: 20,
-                maxAgeSeconds: 60 * 60 * 24 * 7,
-              },
+              expiration: { maxEntries: 20, maxAgeSeconds: 60 * 60 * 24 * 7 },
             },
           },
         ],
