@@ -1,21 +1,25 @@
 import { Routes, Route, useLocation } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import Nav from './components/layout/Nav'
 import Footer from './components/layout/Footer'
-import Home from './pages/Home'
-import About from './pages/About'
-import Contact from './pages/Contact'
-import Services from './pages/Services'
-import FAQ from './pages/FAQ'
-import Consultation from './pages/Consultation'
-import Intake from './pages/Intake'
-import Privacy from './pages/Privacy'
-import Terms from './pages/Terms'
 import JsonLD from './components/seo/JsonLD'
 import ScrollToTop from './components/ui/ScrollToTop'
 import useDarkMode from './hooks/useDarkMode'
 import { useSEO } from './hooks/useSEO'
+import { SITE_URL } from './config'
 
-import { SITE_URL as BASE } from './config'
+// Lazy load all pages
+const Home         = lazy(() => import('./pages/Home'))
+const About        = lazy(() => import('./pages/About'))
+const Contact      = lazy(() => import('./pages/Contact'))
+const Services     = lazy(() => import('./pages/Services'))
+const FAQ          = lazy(() => import('./pages/FAQ'))
+const Consultation = lazy(() => import('./pages/Consultation'))
+const Intake       = lazy(() => import('./pages/Intake'))
+const Privacy      = lazy(() => import('./pages/Privacy'))
+const Terms        = lazy(() => import('./pages/Terms'))
+
+const BASE = SITE_URL
 
 const LEGAL_SERVICE_SCHEMA = {
   '@context': 'https://schema.org',
@@ -96,43 +100,68 @@ const FAQ_SCHEMA = {
   ],
 }
 
+const SEO_MAP: Record<string, { title: string; description: string }> = {
+  '/': {
+    title: 'Personal Injury Lawyer Chicago',
+    description: 'Conrad Szewczyk & Associates — Chicago personal injury lawyer serving Cook County and Chicagoland. Car accidents, slip and fall, workplace injuries. Free consultation. No fee unless we win.',
+  },
+  '/services': {
+    title: 'Personal Injury Practice Areas',
+    description: 'We handle car accidents, medical malpractice, workplace injuries, slip and fall, wrongful death, and product liability cases across Chicago and Cook County.',
+  },
+  '/about': {
+    title: 'About Conrad Szewczyk',
+    description: 'Meet Conrad Szewczyk, personal injury attorney serving Chicago and Chicagoland. Dedicated to fighting for injured individuals and families across Illinois.',
+  },
+  '/contact': {
+    title: 'Contact Us',
+    description: 'Contact Conrad Szewczyk & Associates. Reach us by phone, email, or contact form. We respond within 24 hours. Free consultation available.',
+  },
+  '/faq': {
+    title: 'Personal Injury Law FAQ',
+    description: 'Answers to common questions about personal injury law in Illinois. Contingency fees, statute of limitations, what compensation you can recover, and more.',
+  },
+  '/consultation': {
+    title: 'Free Consultation',
+    description: 'Schedule a free, confidential consultation with Conrad Szewczyk. No obligation, no pressure. No fee unless we win your case.',
+  },
+  '/intake': {
+    title: 'Start Your Case',
+    description: 'Begin your personal injury case intake with Conrad Szewczyk & Associates. Secure, confidential, available in English, Spanish, Polish, French, and Arabic.',
+  },
+  '/privacy': {
+    title: 'Privacy Policy',
+    description: 'Privacy Policy for Conrad Szewczyk & Associates. Learn how we collect, use, and protect your information.',
+  },
+  '/terms': {
+    title: 'Terms of Use',
+    description: 'Terms of Use for Conrad Szewczyk & Associates website.',
+  },
+}
+
 function SEOWrapper() {
   const location = useLocation()
-
-  const SEO_MAP: Record<string, { title: string; description: string }> = {
-    '/': {
-      title: 'Personal Injury Lawyer Chicago',
-      description: 'Conrad Szewczyk & Associates — Chicago personal injury lawyer serving Cook County and Chicagoland. Car accidents, slip and fall, workplace injuries. Free consultation. No fee unless we win.',
-    },
-    '/services': {
-      title: 'Personal Injury Practice Areas',
-      description: 'We handle car accidents, medical malpractice, workplace injuries, slip and fall, wrongful death, and product liability cases across Chicago and Cook County.',
-    },
-    '/about': {
-      title: 'About Conrad Szewczyk',
-      description: 'Meet Conrad Szewczyk, personal injury attorney serving Chicago and Chicagoland. Dedicated to fighting for injured individuals and families across Illinois.',
-    },
-    '/contact': {
-      title: 'Contact Us',
-      description: 'Contact Conrad Szewczyk & Associates. Reach us by phone, email, or contact form. We respond within 24 hours. Free consultation available.',
-    },
-    '/faq': {
-      title: 'Personal Injury Law FAQ',
-      description: 'Answers to common questions about personal injury law in Illinois. Contingency fees, statute of limitations, what compensation you can recover, and more.',
-    },
-    '/consultation': {
-      title: 'Free Consultation',
-      description: 'Schedule a free, confidential consultation with Conrad Szewczyk. No obligation, no pressure. No fee unless we win your case.',
-    },
-    '/intake': {
-      title: 'Start Your Case',
-      description: 'Begin your personal injury case intake with Conrad Szewczyk & Associates. Secure, confidential, available in English, Spanish, Polish, French, and Arabic.',
-    },
-  }
-
   const seo = SEO_MAP[location.pathname] ?? SEO_MAP['/']
   useSEO({ title: seo.title, description: seo.description, path: location.pathname })
   return null
+}
+
+// Loading fallback
+function PageLoader() {
+  return (
+    <div style={{
+      minHeight: '60vh', display: 'flex',
+      alignItems: 'center', justifyContent: 'center',
+    }}>
+      <div style={{
+        width: '32px', height: '32px', borderRadius: '50%',
+        border: '2px solid #E5E0D8',
+        borderTopColor: '#C9A84C',
+        animation: 'spin 0.7s linear infinite',
+      }} />
+      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    </div>
+  )
 }
 
 export default function App() {
@@ -141,21 +170,23 @@ export default function App() {
   return (
     <div style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <JsonLD data={LEGAL_SERVICE_SCHEMA} id="legal-service" />
-      <ScrollToTop />
       <SEOWrapper />
+      <ScrollToTop />
       <Nav isDark={isDark} onToggleDark={toggle} />
       <main style={{ flex: 1 }}>
-        <Routes>
-          <Route path="/"             element={<Home isDark={isDark} />}         />
-          <Route path="/services"     element={<Services isDark={isDark} />}     />
-          <Route path="/about"        element={<><JsonLD data={ATTORNEY_SCHEMA} id="attorney" /><About isDark={isDark} /></>} />
-          <Route path="/contact"      element={<Contact isDark={isDark} />}      />
-          <Route path="/intake"       element={<Intake isDark={isDark} />}       />
-          <Route path="/privacy"      element={<Privacy isDark={isDark} />}     />
-          <Route path="/terms"        element={<Terms isDark={isDark} />}       />
-          <Route path="/faq"          element={<><JsonLD data={FAQ_SCHEMA} id="faq" /><FAQ isDark={isDark} /></>} />
-          <Route path="/consultation" element={<Consultation isDark={isDark} />} />
-        </Routes>
+        <Suspense fallback={<PageLoader />}>
+          <Routes>
+            <Route path="/"             element={<Home isDark={isDark} />}         />
+            <Route path="/services"     element={<Services isDark={isDark} />}     />
+            <Route path="/about"        element={<><JsonLD data={ATTORNEY_SCHEMA} id="attorney" /><About isDark={isDark} /></>} />
+            <Route path="/contact"      element={<Contact isDark={isDark} />}      />
+            <Route path="/intake"       element={<Intake isDark={isDark} />}       />
+            <Route path="/privacy"      element={<Privacy isDark={isDark} />}      />
+            <Route path="/terms"        element={<Terms isDark={isDark} />}        />
+            <Route path="/faq"          element={<><JsonLD data={FAQ_SCHEMA} id="faq" /><FAQ isDark={isDark} /></>} />
+            <Route path="/consultation" element={<Consultation isDark={isDark} />} />
+          </Routes>
+        </Suspense>
       </main>
       <Footer isDark={isDark} />
     </div>
