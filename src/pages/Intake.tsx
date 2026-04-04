@@ -47,7 +47,7 @@ export default function Intake({ isDark }: IntakeProps) {
   const inputBg      = isDark ? '#0F1C2E' : '#FAFAF9'
   const inputBorder  = isDark ? 'rgba(255,255,255,0.15)' : '#D1CBC1'
   const labelColor   = isDark ? '#E5E7EB' : '#2C2C2C'
-  const mutedColor   = isDark ? 'rgba(255,255,255,0.45)' : '#9CA3AF'
+  const mutedColor   = isDark ? 'rgba(255,255,255,0.60)' : '#9CA3AF'
   const dividerColor = isDark ? 'rgba(255,255,255,0.06)' : '#F0EBE3'
 
   const STEPS = [

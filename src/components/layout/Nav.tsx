@@ -106,7 +106,7 @@ export default function Nav({ isDark, onToggleDark }: NavProps) {
               </div>
               <div style={{
                 fontFamily: 'Inter, sans-serif', fontSize: '9px', fontWeight: 600,
-                color: 'rgba(255,255,255,0.45)', letterSpacing: '0.14em',
+                color: 'rgba(255,255,255,0.60)', letterSpacing: '0.14em',
                 textTransform: 'uppercase' as const, marginTop: '2px',
               }}>
                 &amp; Associates

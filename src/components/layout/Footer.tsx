@@ -12,7 +12,7 @@ export default function Footer({ isDark }: FooterProps) {
 
   const bg          = isDark ? '#091220' : '#1B2E4B'
   const borderColor = 'rgba(255,255,255,0.08)'
-  const mutedText   = 'rgba(255,255,255,0.5)'
+  const mutedText   = 'rgba(255,255,255,0.65)'
   const bodyText    = 'rgba(255,255,255,0.75)'
 
   const linkStyle = {

@@ -144,7 +144,7 @@ export default function App() {
       <ScrollToTop />
       <SEOWrapper />
       <Nav isDark={isDark} onToggleDark={toggle} />
-      <div style={{ flex: 1 }}>
+      <main style={{ flex: 1 }}>
         <Routes>
           <Route path="/"             element={<Home isDark={isDark} />}         />
           <Route path="/services"     element={<Services isDark={isDark} />}     />
@@ -156,7 +156,7 @@ export default function App() {
           <Route path="/faq"          element={<><JsonLD data={FAQ_SCHEMA} id="faq" /><FAQ isDark={isDark} /></>} />
           <Route path="/consultation" element={<Consultation isDark={isDark} />} />
         </Routes>
-      </div>
+      </main>
       <Footer isDark={isDark} />
     </div>
   )

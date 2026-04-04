@@ -31,7 +31,7 @@ export default function Contact({ isDark }: ContactProps) {
   const inputBg      = isDark ? '#0F1C2E' : '#FAFAF9'
   const inputBorder  = isDark ? 'rgba(255,255,255,0.15)' : '#D1CBC1'
   const labelColor   = isDark ? '#E5E7EB' : '#2C2C2C'
-  const mutedColor   = isDark ? 'rgba(255,255,255,0.45)' : '#9CA3AF'
+  const mutedColor   = isDark ? 'rgba(255,255,255,0.60)' : '#9CA3AF'
 
   function validate() {
     const e: Partial<typeof INITIAL_FORM> = {}

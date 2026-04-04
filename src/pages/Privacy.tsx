@@ -15,7 +15,7 @@ export default function Privacy({ isDark }: PrivacyProps) {
   const cardBorder   = isDark ? 'rgba(255,255,255,0.08)' : '#E5E0D8'
   const headingColor = isDark ? '#F9FAFB' : '#1B2E4B'
   const bodyColor    = isDark ? '#D1D5DB' : '#4B5563'
-  const mutedColor   = isDark ? 'rgba(255,255,255,0.45)' : '#9CA3AF'
+  const mutedColor   = isDark ? 'rgba(255,255,255,0.60)' : '#9CA3AF'
   const dividerColor = isDark ? 'rgba(255,255,255,0.06)' : '#F0EBE3'
 
   const sectionTitle = (text: string) => (
@@ -75,7 +75,7 @@ export default function Privacy({ isDark }: PrivacyProps) {
           </h1>
           <p style={{
             fontFamily: 'Inter, sans-serif', fontSize: '14px',
-            color: 'rgba(255,255,255,0.5)',
+            color: 'rgba(255,255,255,0.65)',
           }}>
             {t('privacy.effective')}
           </p>

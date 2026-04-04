@@ -18,7 +18,7 @@ export default function About({ isDark }: AboutProps) {
   const headingColor = isDark ? '#F9FAFB' : '#1B2E4B'
   const bodyColor    = isDark ? '#D1D5DB' : '#4B5563'
   const sectionBg    = isDark ? '#0D1929' : '#FFFFFF'
-  const mutedColor   = isDark ? 'rgba(255,255,255,0.45)' : '#9CA3AF'
+  const mutedColor   = isDark ? 'rgba(255,255,255,0.60)' : '#9CA3AF'
 
   const STATS = [
     { value: '[X]+',   labelKey: 'about.stat_years_label'     },
