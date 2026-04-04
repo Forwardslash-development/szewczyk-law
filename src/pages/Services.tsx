@@ -1,48 +1,20 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowRight, CheckCircle } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { AnimatedSection, staggerContainer, fadeUp } from '../components/ui/AnimatedSection'
 
 interface ServicesProps {
   isDark: boolean
 }
 
 const SERVICE_KEYS = [
-  {
-    icon: '🚗',
-    titleKey: 'services_page.car_title',
-    introKey: 'services_page.car_intro',
-    pointKeys: ['services_page.car_p1', 'services_page.car_p2', 'services_page.car_p3', 'services_page.car_p4', 'services_page.car_p5'],
-  },
-  {
-    icon: '🏥',
-    titleKey: 'services_page.medical_title',
-    introKey: 'services_page.medical_intro',
-    pointKeys: ['services_page.medical_p1', 'services_page.medical_p2', 'services_page.medical_p3', 'services_page.medical_p4', 'services_page.medical_p5'],
-  },
-  {
-    icon: '🏗',
-    titleKey: 'services_page.workplace_title',
-    introKey: 'services_page.workplace_intro',
-    pointKeys: ['services_page.workplace_p1', 'services_page.workplace_p2', 'services_page.workplace_p3', 'services_page.workplace_p4', 'services_page.workplace_p5'],
-  },
-  {
-    icon: '🚶',
-    titleKey: 'services_page.slip_title',
-    introKey: 'services_page.slip_intro',
-    pointKeys: ['services_page.slip_p1', 'services_page.slip_p2', 'services_page.slip_p3', 'services_page.slip_p4', 'services_page.slip_p5'],
-  },
-  {
-    icon: '⚖',
-    titleKey: 'services_page.wrongful_title',
-    introKey: 'services_page.wrongful_intro',
-    pointKeys: ['services_page.wrongful_p1', 'services_page.wrongful_p2', 'services_page.wrongful_p3', 'services_page.wrongful_p4', 'services_page.wrongful_p5'],
-  },
-  {
-    icon: '📦',
-    titleKey: 'services_page.product_title',
-    introKey: 'services_page.product_intro',
-    pointKeys: ['services_page.product_p1', 'services_page.product_p2', 'services_page.product_p3', 'services_page.product_p4', 'services_page.product_p5'],
-  },
+  { icon: '🚗', titleKey: 'services_page.car_title',      introKey: 'services_page.car_intro',      pointKeys: ['services_page.car_p1', 'services_page.car_p2', 'services_page.car_p3', 'services_page.car_p4', 'services_page.car_p5'] },
+  { icon: '🏥', titleKey: 'services_page.medical_title',  introKey: 'services_page.medical_intro',  pointKeys: ['services_page.medical_p1', 'services_page.medical_p2', 'services_page.medical_p3', 'services_page.medical_p4', 'services_page.medical_p5'] },
+  { icon: '🏗', titleKey: 'services_page.workplace_title', introKey: 'services_page.workplace_intro', pointKeys: ['services_page.workplace_p1', 'services_page.workplace_p2', 'services_page.workplace_p3', 'services_page.workplace_p4', 'services_page.workplace_p5'] },
+  { icon: '🚶', titleKey: 'services_page.slip_title',     introKey: 'services_page.slip_intro',     pointKeys: ['services_page.slip_p1', 'services_page.slip_p2', 'services_page.slip_p3', 'services_page.slip_p4', 'services_page.slip_p5'] },
+  { icon: '⚖',  titleKey: 'services_page.wrongful_title', introKey: 'services_page.wrongful_intro', pointKeys: ['services_page.wrongful_p1', 'services_page.wrongful_p2', 'services_page.wrongful_p3', 'services_page.wrongful_p4', 'services_page.wrongful_p5'] },
+  { icon: '📦', titleKey: 'services_page.product_title',  introKey: 'services_page.product_intro',  pointKeys: ['services_page.product_p1', 'services_page.product_p2', 'services_page.product_p3', 'services_page.product_p4', 'services_page.product_p5'] },
 ]
 
 export default function Services({ isDark }: ServicesProps) {
@@ -61,36 +33,43 @@ export default function Services({ isDark }: ServicesProps) {
       {/* Hero */}
       <section style={{ background: heroBg, padding: '64px 24px', transition: 'background 0.2s' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
-            color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
-          }}>
-            {t('services_page.overline')}
-          </div>
-          <h1 style={{
-            fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
-            color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '600px',
-          }}>
-            {t('services_page.title')}
-          </h1>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '16px',
-            color: 'rgba(255,255,255,0.7)', maxWidth: '520px', lineHeight: 1.7,
-          }}>
-            {t('services_page.subtitle')}
-          </p>
+          <motion.div variants={staggerContainer} initial="hidden" animate="show">
+            <motion.div variants={fadeUp} style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
+              color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
+            }}>
+              {t('services_page.overline')}
+            </motion.div>
+            <motion.h1 variants={fadeUp} style={{
+              fontFamily: 'Playfair Display, Georgia, serif',
+              fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
+              color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '600px',
+            }}>
+              {t('services_page.title')}
+            </motion.h1>
+            <motion.p variants={fadeUp} style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '16px',
+              color: 'rgba(255,255,255,0.7)', maxWidth: '520px', lineHeight: 1.7,
+            }}>
+              {t('services_page.subtitle')}
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
       {/* Services grid */}
       <section style={{ padding: '72px 24px' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{
-            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(340px, 1fr))', gap: '24px',
-          }}>
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            className="services-grid"
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '24px' }}
+          >
             {SERVICE_KEYS.map(({ icon, titleKey, introKey, pointKeys }) => (
-              <div key={titleKey} style={{
+              <motion.div key={titleKey} variants={fadeUp} style={{
                 background: cardBg, border: `1px solid ${cardBorder}`,
                 borderRadius: '8px', padding: '28px',
                 display: 'flex', flexDirection: 'column', gap: '16px',
@@ -141,40 +120,50 @@ export default function Services({ isDark }: ServicesProps) {
                   {t('services_page.discuss_btn')}
                   <ArrowRight size={13} strokeWidth={2} />
                 </NavLink>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Bottom CTA */}
-      <section style={{ background: heroBg, padding: '64px 24px', textAlign: 'center', transition: 'background 0.2s' }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <h2 style={{
-            fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600,
-            color: '#ffffff', marginBottom: '14px',
-          }}>
-            {t('services_page.cta_title')}
-          </h2>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '16px',
-            color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '28px',
-          }}>
-            {t('services_page.cta_desc')}
-          </p>
-          <NavLink to="/consultation" style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
-            background: '#C0392B', color: '#ffffff', padding: '13px 32px',
-            borderRadius: '4px', textDecoration: 'none',
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-          }}>
-            {t('services_page.cta_btn')}
-            <ArrowRight size={16} strokeWidth={2} />
-          </NavLink>
-        </div>
-      </section>
+      <AnimatedSection>
+        <section style={{ background: heroBg, padding: '64px 24px', textAlign: 'center', transition: 'background 0.2s' }}>
+          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <h2 style={{
+              fontFamily: 'Playfair Display, Georgia, serif',
+              fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600,
+              color: '#ffffff', marginBottom: '14px',
+            }}>
+              {t('services_page.cta_title')}
+            </h2>
+            <p style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '16px',
+              color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '28px',
+            }}>
+              {t('services_page.cta_desc')}
+            </p>
+            <NavLink to="/consultation" style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
+              background: '#C0392B', color: '#ffffff', padding: '13px 32px',
+              borderRadius: '4px', textDecoration: 'none',
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+            }}>
+              {t('services_page.cta_btn')}
+              <ArrowRight size={16} strokeWidth={2} />
+            </NavLink>
+          </div>
+        </section>
+      </AnimatedSection>
 
+      <style>{`
+        @media (max-width: 1024px) {
+          .services-grid { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+        @media (max-width: 640px) {
+          .services-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </div>
   )
 }

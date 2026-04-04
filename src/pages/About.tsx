@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowRight, Scale, Award, BookOpen, Users, MapPin } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { AnimatedSection, staggerContainer, fadeUp } from '../components/ui/AnimatedSection'
 
 interface AboutProps {
   isDark: boolean
@@ -18,14 +20,6 @@ export default function About({ isDark }: AboutProps) {
   const sectionBg    = isDark ? '#0D1929' : '#FFFFFF'
   const mutedColor   = isDark ? 'rgba(255,255,255,0.45)' : '#9CA3AF'
 
-  const statStyle = {
-    textAlign: 'center' as const,
-    padding: '28px 20px',
-    background: 'rgba(255,255,255,0.05)',
-    border: '1px solid rgba(255,255,255,0.1)',
-    borderRadius: '8px',
-  }
-
   const STATS = [
     { value: '[X]+',   labelKey: 'about.stat_years_label'     },
     { value: '[X]+',   labelKey: 'about.stat_cases_label'     },
@@ -36,26 +30,10 @@ export default function About({ isDark }: AboutProps) {
   const BIO_KEYS = ['about.bio_1', 'about.bio_2', 'about.bio_3', 'about.bio_4']
 
   const CREDENTIALS = [
-    {
-      icon: BookOpen,
-      titleKey: 'about.law_school_title',
-      itemKeys: ['about.law_school_1', 'about.law_school_2'],
-    },
-    {
-      icon: Scale,
-      titleKey: 'about.bar_title',
-      itemKeys: ['about.bar_1', 'about.bar_2', 'about.bar_3'],
-    },
-    {
-      icon: Award,
-      titleKey: 'about.awards_title',
-      itemKeys: ['about.awards_1', 'about.awards_2', 'about.awards_3'],
-    },
-    {
-      icon: Users,
-      titleKey: 'about.memberships_title',
-      itemKeys: ['about.memberships_1', 'about.memberships_2', 'about.memberships_3'],
-    },
+    { icon: BookOpen, titleKey: 'about.law_school_title', itemKeys: ['about.law_school_1', 'about.law_school_2'] },
+    { icon: Scale,    titleKey: 'about.bar_title',        itemKeys: ['about.bar_1', 'about.bar_2', 'about.bar_3'] },
+    { icon: Award,    titleKey: 'about.awards_title',     itemKeys: ['about.awards_1', 'about.awards_2', 'about.awards_3'] },
+    { icon: Users,    titleKey: 'about.memberships_title', itemKeys: ['about.memberships_1', 'about.memberships_2', 'about.memberships_3'] },
   ]
 
   const COMMUNITY = [
@@ -64,54 +42,72 @@ export default function About({ isDark }: AboutProps) {
     { icon: Award,  titleKey: 'about.probono_title',     descKey: 'about.probono_desc'     },
   ]
 
+  const statStyle = {
+    textAlign: 'center' as const,
+    padding: '28px 20px',
+    background: 'rgba(255,255,255,0.05)',
+    border: '1px solid rgba(255,255,255,0.1)',
+    borderRadius: '8px',
+  }
+
   return (
     <div style={{ background: pageBg, transition: 'background 0.2s' }}>
 
       {/* Hero Banner */}
       <section style={{ background: heroBg, padding: '64px 24px', transition: 'background 0.2s' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
-            color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
-          }}>
-            {t('about.overline')}
-          </div>
-          <h1 style={{
-            fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
-            color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '700px',
-          }}>
-            {t('about.title')}
-          </h1>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '16px',
-            color: 'rgba(255,255,255,0.7)', marginBottom: '32px',
-          }}>
-            {t('about.subtitle')}
-          </p>
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            animate="show"
+          >
+            <motion.div variants={fadeUp} style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
+              color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
+            }}>
+              {t('about.overline')}
+            </motion.div>
+            <motion.h1 variants={fadeUp} style={{
+              fontFamily: 'Playfair Display, Georgia, serif',
+              fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
+              color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '700px',
+            }}>
+              {t('about.title')}
+            </motion.h1>
+            <motion.p variants={fadeUp} style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '16px',
+              color: 'rgba(255,255,255,0.7)', marginBottom: '32px',
+            }}>
+              {t('about.subtitle')}
+            </motion.p>
 
-          {/* Stats */}
-          <div style={{
-            display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
-            gap: '16px', maxWidth: '700px',
-          }}>
-            {STATS.map(({ value, labelKey }) => (
-              <div key={labelKey} style={statStyle}>
-                <div style={{
-                  fontFamily: 'Playfair Display, Georgia, serif', fontSize: '28px',
-                  fontWeight: 700, color: '#C9A84C', lineHeight: 1, marginBottom: '6px',
-                }}>
-                  {value}
-                </div>
-                <div style={{
-                  fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 500,
-                  color: 'rgba(255,255,255,0.6)', letterSpacing: '0.06em',
-                }}>
-                  {t(labelKey)}
-                </div>
-              </div>
-            ))}
-          </div>
+            {/* Stats */}
+            <motion.div
+              variants={staggerContainer}
+              style={{
+                display: 'grid',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+                gap: '16px', maxWidth: '700px',
+              }}
+            >
+              {STATS.map(({ value, labelKey }) => (
+                <motion.div key={labelKey} variants={fadeUp} style={statStyle}>
+                  <div style={{
+                    fontFamily: 'Playfair Display, Georgia, serif', fontSize: '28px',
+                    fontWeight: 700, color: '#C9A84C', lineHeight: 1, marginBottom: '6px',
+                  }}>
+                    {value}
+                  </div>
+                  <div style={{
+                    fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 500,
+                    color: 'rgba(255,255,255,0.6)', letterSpacing: '0.06em',
+                  }}>
+                    {t(labelKey)}
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
@@ -122,7 +118,7 @@ export default function About({ isDark }: AboutProps) {
             className="about-grid">
 
             {/* Photo + contact card */}
-            <div>
+            <AnimatedSection>
               <div style={{
                 width: '100%', aspectRatio: '3/4',
                 background: isDark ? '#1B2E4B' : '#E5E0D8', borderRadius: '8px',
@@ -179,10 +175,10 @@ export default function About({ isDark }: AboutProps) {
                   {t('about.schedule_btn')}
                 </NavLink>
               </div>
-            </div>
+            </AnimatedSection>
 
             {/* Bio text */}
-            <div>
+            <AnimatedSection delay={0.15}>
               <div style={{
                 fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
                 color: '#C9A84C', letterSpacing: '0.14em', textTransform: 'uppercase', marginBottom: '16px',
@@ -210,7 +206,6 @@ export default function About({ isDark }: AboutProps) {
                 )
               })}
 
-              {/* Philosophy callout */}
               <div style={{
                 borderLeft: '3px solid #C9A84C', paddingLeft: '20px',
                 marginTop: '32px', marginBottom: '32px',
@@ -228,7 +223,7 @@ export default function About({ isDark }: AboutProps) {
                   {t('about.quote_attr')}
                 </p>
               </div>
-            </div>
+            </AnimatedSection>
           </div>
         </div>
       </section>
@@ -236,7 +231,7 @@ export default function About({ isDark }: AboutProps) {
       {/* Credentials */}
       <section style={{ background: pageBg, padding: '72px 24px', transition: 'background 0.2s' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <AnimatedSection style={{ textAlign: 'center', marginBottom: '48px' }}>
             <div style={{
               fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
               color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '12px',
@@ -250,11 +245,17 @@ export default function About({ isDark }: AboutProps) {
             }}>
               {t('about.credentials_title')}
             </h2>
-          </div>
+          </AnimatedSection>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}
+          >
             {CREDENTIALS.map(({ icon: Icon, titleKey, itemKeys }) => (
-              <div key={titleKey} style={{
+              <motion.div key={titleKey} variants={fadeUp} style={{
                 background: cardBg, border: `1px solid ${cardBorder}`,
                 borderRadius: '8px', padding: '24px', transition: 'background 0.2s',
               }}>
@@ -283,24 +284,23 @@ export default function About({ isDark }: AboutProps) {
                       <span style={{
                         fontFamily: 'Inter, sans-serif', fontSize: '13px',
                         color: text.startsWith('[') ? mutedColor : bodyColor,
-                        lineHeight: 1.6,
-                        fontStyle: text.startsWith('[') ? 'italic' : 'normal',
+                        lineHeight: 1.6, fontStyle: text.startsWith('[') ? 'italic' : 'normal',
                       }}>
                         {text}
                       </span>
                     </div>
                   )
                 })}
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Community */}
       <section style={{ background: sectionBg, padding: '72px 24px', transition: 'background 0.2s' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{ textAlign: 'center', marginBottom: '48px' }}>
+          <AnimatedSection style={{ textAlign: 'center', marginBottom: '48px' }}>
             <div style={{
               fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
               color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '12px',
@@ -314,11 +314,17 @@ export default function About({ isDark }: AboutProps) {
             }}>
               {t('about.community_title')}
             </h2>
-          </div>
+          </AnimatedSection>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}>
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '20px' }}
+          >
             {COMMUNITY.map(({ icon: Icon, titleKey, descKey }) => (
-              <div key={titleKey} style={{
+              <motion.div key={titleKey} variants={fadeUp} style={{
                 background: cardBg, border: `1px solid ${cardBorder}`,
                 borderRadius: '8px', padding: '24px', transition: 'background 0.2s',
               }}>
@@ -342,46 +348,47 @@ export default function About({ isDark }: AboutProps) {
                 }}>
                   {t(descKey)}
                 </p>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Bottom CTA */}
-      <section style={{ background: heroBg, padding: '64px 24px', textAlign: 'center', transition: 'background 0.2s' }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <h2 style={{
-            fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600,
-            color: '#ffffff', marginBottom: '14px',
-          }}>
-            {t('about.cta_title')}
-          </h2>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '16px',
-            color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '28px',
-          }}>
-            {t('about.cta_desc')}
-          </p>
-          <NavLink to="/consultation" style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
-            background: '#C0392B', color: '#ffffff', padding: '13px 32px',
-            borderRadius: '4px', textDecoration: 'none',
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-          }}>
-            {t('about.cta_btn')}
-            <ArrowRight size={16} strokeWidth={2} />
-          </NavLink>
-        </div>
-      </section>
+      <AnimatedSection>
+        <section style={{ background: heroBg, padding: '64px 24px', textAlign: 'center', transition: 'background 0.2s' }}>
+          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <h2 style={{
+              fontFamily: 'Playfair Display, Georgia, serif',
+              fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600,
+              color: '#ffffff', marginBottom: '14px',
+            }}>
+              {t('about.cta_title')}
+            </h2>
+            <p style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '16px',
+              color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '28px',
+            }}>
+              {t('about.cta_desc')}
+            </p>
+            <NavLink to="/consultation" style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
+              background: '#C0392B', color: '#ffffff', padding: '13px 32px',
+              borderRadius: '4px', textDecoration: 'none',
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+            }}>
+              {t('about.cta_btn')}
+              <ArrowRight size={16} strokeWidth={2} />
+            </NavLink>
+          </div>
+        </section>
+      </AnimatedSection>
 
       <style>{`
         @media (max-width: 768px) {
           .about-grid { grid-template-columns: 1fr !important; gap: 32px !important; }
         }
       `}</style>
-
     </div>
   )
 }

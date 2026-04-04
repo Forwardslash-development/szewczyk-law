@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { ChevronDown, ArrowRight } from 'lucide-react'
 import { NavLink } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
+import { AnimatedSection, staggerContainer, fadeUp } from '../components/ui/AnimatedSection'
 
 interface FAQProps {
   isDark: boolean
@@ -59,33 +61,41 @@ export default function FAQ({ isDark }: FAQProps) {
       {/* Hero */}
       <section style={{ background: heroBg, padding: '64px 24px', transition: 'background 0.2s' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
-            color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
-          }}>
-            {t('faq.overline')}
-          </div>
-          <h1 style={{
-            fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
-            color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '600px',
-          }}>
-            {t('faq.title')}
-          </h1>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '16px',
-            color: 'rgba(255,255,255,0.7)', maxWidth: '500px', lineHeight: 1.7,
-          }}>
-            {t('faq.subtitle')}
-          </p>
+          <motion.div variants={staggerContainer} initial="hidden" animate="show">
+            <motion.div variants={fadeUp} style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
+              color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
+            }}>
+              {t('faq.overline')}
+            </motion.div>
+            <motion.h1 variants={fadeUp} style={{
+              fontFamily: 'Playfair Display, Georgia, serif',
+              fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
+              color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '600px',
+            }}>
+              {t('faq.title')}
+            </motion.h1>
+            <motion.p variants={fadeUp} style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '16px',
+              color: 'rgba(255,255,255,0.7)', maxWidth: '500px', lineHeight: 1.7,
+            }}>
+              {t('faq.subtitle')}
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
       {/* FAQ content */}
       <section style={{ padding: '72px 24px' }}>
-        <div style={{ maxWidth: '860px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '48px' }}>
+        <motion.div
+          variants={staggerContainer}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: '-60px' }}
+          style={{ maxWidth: '860px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '48px' }}
+        >
           {FAQ_KEYS.map(({ catKey, questions }) => (
-            <div key={catKey}>
+            <motion.div key={catKey} variants={fadeUp}>
               <div style={{
                 fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
                 color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
@@ -118,62 +128,72 @@ export default function FAQ({ isDark }: FAQProps) {
                         }}>
                           {t(qKey)}
                         </span>
-                        <ChevronDown
-                          size={18} color="#C9A84C" strokeWidth={1.5}
-                          style={{
-                            flexShrink: 0,
-                            transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                            transition: 'transform 0.2s',
-                          }}
-                        />
+                        <motion.div
+                          animate={{ rotate: isOpen ? 180 : 0 }}
+                          transition={{ duration: 0.2 }}
+                          style={{ flexShrink: 0 }}
+                        >
+                          <ChevronDown size={18} color="#C9A84C" strokeWidth={1.5} />
+                        </motion.div>
                       </button>
-                      {isOpen && (
-                        <div style={{ padding: '0 24px 20px', borderTop: `1px solid ${dividerColor}` }}>
-                          <p style={{
-                            fontFamily: 'Inter, sans-serif', fontSize: '14px', color: bodyColor,
-                            lineHeight: 1.8, margin: '16px 0 0', transition: 'color 0.2s',
-                          }}>
-                            {t(aKey)}
-                          </p>
-                        </div>
-                      )}
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+                            style={{ overflow: 'hidden' }}
+                          >
+                            <div style={{ padding: '0 24px 20px', borderTop: `1px solid ${dividerColor}` }}>
+                              <p style={{
+                                fontFamily: 'Inter, sans-serif', fontSize: '14px', color: bodyColor,
+                                lineHeight: 1.8, margin: '16px 0 0', transition: 'color 0.2s',
+                              }}>
+                                {t(aKey)}
+                              </p>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
                   )
                 })}
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </section>
 
       {/* Bottom CTA */}
-      <section style={{ background: heroBg, padding: '64px 24px', textAlign: 'center', transition: 'background 0.2s' }}>
-        <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          <h2 style={{
-            fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600,
-            color: '#ffffff', marginBottom: '14px',
-          }}>
-            {t('faq.cta_title')}
-          </h2>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '16px',
-            color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '28px',
-          }}>
-            {t('faq.cta_desc')}
-          </p>
-          <NavLink to="/consultation" style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
-            background: '#C0392B', color: '#ffffff', padding: '13px 32px',
-            borderRadius: '4px', textDecoration: 'none',
-            display: 'inline-flex', alignItems: 'center', gap: '8px',
-          }}>
-            {t('faq.cta_btn')}
-            <ArrowRight size={16} strokeWidth={2} />
-          </NavLink>
-        </div>
-      </section>
-
+      <AnimatedSection>
+        <section style={{ background: heroBg, padding: '64px 24px', textAlign: 'center', transition: 'background 0.2s' }}>
+          <div style={{ maxWidth: '600px', margin: '0 auto' }}>
+            <h2 style={{
+              fontFamily: 'Playfair Display, Georgia, serif',
+              fontSize: 'clamp(24px, 3vw, 36px)', fontWeight: 600,
+              color: '#ffffff', marginBottom: '14px',
+            }}>
+              {t('faq.cta_title')}
+            </h2>
+            <p style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '16px',
+              color: 'rgba(255,255,255,0.75)', lineHeight: 1.7, marginBottom: '28px',
+            }}>
+              {t('faq.cta_desc')}
+            </p>
+            <NavLink to="/consultation" style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '15px', fontWeight: 500,
+              background: '#C0392B', color: '#ffffff', padding: '13px 32px',
+              borderRadius: '4px', textDecoration: 'none',
+              display: 'inline-flex', alignItems: 'center', gap: '8px',
+            }}>
+              {t('faq.cta_btn')}
+              <ArrowRight size={16} strokeWidth={2} />
+            </NavLink>
+          </div>
+        </section>
+      </AnimatedSection>
     </div>
   )
 }

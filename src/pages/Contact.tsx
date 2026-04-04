@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Phone, Mail, MapPin, Clock, ArrowRight, CheckCircle } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { AnimatedSection, staggerContainer, fadeUp } from '../components/ui/AnimatedSection'
 
 interface ContactProps {
   isDark: boolean
@@ -71,30 +73,10 @@ export default function Contact({ isDark }: ContactProps) {
   }
 
   const INFO_CARDS = [
-    {
-      icon: Phone,
-      titleKey: 'contact.phone_title',
-      lines: [t('contact.phone_line1'), t('contact.phone_line2')],
-      href: 'tel:+13125550100',
-    },
-    {
-      icon: Mail,
-      titleKey: 'contact.email_title',
-      lines: [t('contact.email_line1'), t('contact.email_line2')],
-      href: 'mailto:szewczyklaw@gmail.com',
-    },
-    {
-      icon: MapPin,
-      titleKey: 'contact.office_title',
-      lines: [t('contact.office_line1'), t('contact.office_line2')],
-      href: undefined,
-    },
-    {
-      icon: Clock,
-      titleKey: 'contact.hours_title',
-      lines: [t('contact.hours_line1'), t('contact.hours_line2'), t('contact.hours_line3')],
-      href: undefined,
-    },
+    { icon: Phone, titleKey: 'contact.phone_title', lines: [t('contact.phone_line1'), t('contact.phone_line2')], href: 'tel:+13125550100' },
+    { icon: Mail,  titleKey: 'contact.email_title', lines: [t('contact.email_line1'), t('contact.email_line2')], href: 'mailto:szewczyklaw@gmail.com' },
+    { icon: MapPin, titleKey: 'contact.office_title', lines: [t('contact.office_line1'), t('contact.office_line2')], href: undefined },
+    { icon: Clock, titleKey: 'contact.hours_title', lines: [t('contact.hours_line1'), t('contact.hours_line2'), t('contact.hours_line3')], href: undefined },
   ]
 
   return (
@@ -103,25 +85,27 @@ export default function Contact({ isDark }: ContactProps) {
       {/* Hero */}
       <section style={{ background: heroBg, padding: '64px 24px', transition: 'background 0.2s' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-          <div style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
-            color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
-          }}>
-            {t('contact.overline')}
-          </div>
-          <h1 style={{
-            fontFamily: 'Playfair Display, Georgia, serif',
-            fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
-            color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '600px',
-          }}>
-            {t('contact.title')}
-          </h1>
-          <p style={{
-            fontFamily: 'Inter, sans-serif', fontSize: '16px',
-            color: 'rgba(255,255,255,0.7)', maxWidth: '500px', lineHeight: 1.7,
-          }}>
-            {t('contact.subtitle')}
-          </p>
+          <motion.div variants={staggerContainer} initial="hidden" animate="show">
+            <motion.div variants={fadeUp} style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '11px', fontWeight: 600,
+              color: '#C9A84C', letterSpacing: '0.16em', textTransform: 'uppercase', marginBottom: '16px',
+            }}>
+              {t('contact.overline')}
+            </motion.div>
+            <motion.h1 variants={fadeUp} style={{
+              fontFamily: 'Playfair Display, Georgia, serif',
+              fontSize: 'clamp(32px, 4vw, 52px)', fontWeight: 700,
+              color: '#ffffff', lineHeight: 1.15, marginBottom: '16px', maxWidth: '600px',
+            }}>
+              {t('contact.title')}
+            </motion.h1>
+            <motion.p variants={fadeUp} style={{
+              fontFamily: 'Inter, sans-serif', fontSize: '16px',
+              color: 'rgba(255,255,255,0.7)', maxWidth: '500px', lineHeight: 1.7,
+            }}>
+              {t('contact.subtitle')}
+            </motion.p>
+          </motion.div>
         </div>
       </section>
 
@@ -134,11 +118,16 @@ export default function Contact({ isDark }: ContactProps) {
         }}
         className="contact-grid"
         >
-
           {/* Left — Contact info */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          <motion.div
+            variants={staggerContainer}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: '-60px' }}
+            style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}
+          >
             {INFO_CARDS.map(({ icon: Icon, titleKey, lines, href }) => (
-              <div key={titleKey} style={{
+              <motion.div key={titleKey} variants={fadeUp} style={{
                 background: cardBg, border: `1px solid ${cardBorder}`,
                 borderRadius: '8px', padding: '20px', transition: 'background 0.2s',
               }}>
@@ -175,11 +164,10 @@ export default function Contact({ isDark }: ContactProps) {
                     ))}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
 
-            {/* Map placeholder */}
-            <div style={{
+            <motion.div variants={fadeUp} style={{
               background: cardBg, border: `1px solid ${cardBorder}`,
               borderRadius: '8px', height: '200px',
               display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -192,11 +180,11 @@ export default function Contact({ isDark }: ContactProps) {
               }}>
                 {t('contact.map_placeholder')}
               </span>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
 
           {/* Right — Form */}
-          <div style={{
+          <AnimatedSection delay={0.15} style={{
             background: cardBg, border: `1px solid ${cardBorder}`,
             borderRadius: '8px', padding: '36px', transition: 'background 0.2s',
           }}>
@@ -320,7 +308,7 @@ export default function Contact({ isDark }: ContactProps) {
                 </button>
               </>
             )}
-          </div>
+          </AnimatedSection>
         </div>
       </section>
 
