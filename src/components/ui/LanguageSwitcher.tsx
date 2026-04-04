@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
-import { Globe, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 
 const LANGUAGES = [
-  { code: 'en', label: 'English',  native: 'English'  },
-  { code: 'es', label: 'Spanish',  native: 'Español'  },
-  { code: 'pl', label: 'Polish',   native: 'Polski'   },
-  { code: 'fr', label: 'French',   native: 'Français' },
-  { code: 'ar', label: 'Arabic',   native: 'العربية'  },
+  { code: 'en', label: 'English',  native: 'English',  flag: '🇺🇸' },
+  { code: 'es', label: 'Spanish',  native: 'Español',  flag: '🇪🇸' },
+  { code: 'pl', label: 'Polish',   native: 'Polski',   flag: '🇵🇱' },
+  { code: 'fr', label: 'French',   native: 'Français', flag: '🇫🇷' },
+  { code: 'ar', label: 'Arabic',   native: 'العربية',  flag: '🇸🇦' },
 ]
 
 export default function LanguageSwitcher() {
@@ -15,10 +15,8 @@ export default function LanguageSwitcher() {
   const [open, setOpen] = useState(false)
   const ref = useRef<HTMLDivElement>(null)
 
-  const current = LANGUAGES.find(l => l.code === i18n.language)
-    ?? LANGUAGES[0]
+  const current = LANGUAGES.find(l => l.code === i18n.language) ?? LANGUAGES[0]
 
-  // Close on outside click
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (ref.current && !ref.current.contains(e.target as Node)) {
@@ -31,7 +29,6 @@ export default function LanguageSwitcher() {
 
   function switchLanguage(code: string) {
     i18n.changeLanguage(code)
-    // Set RTL for Arabic
     document.documentElement.setAttribute('dir', code === 'ar' ? 'rtl' : 'ltr')
     document.documentElement.setAttribute('lang', code)
     setOpen(false)
@@ -46,7 +43,7 @@ export default function LanguageSwitcher() {
         style={{
           display: 'flex',
           alignItems: 'center',
-          gap: '5px',
+          gap: '6px',
           padding: '5px 10px',
           background: 'transparent',
           border: '1px solid rgba(255,255,255,0.25)',
@@ -58,8 +55,8 @@ export default function LanguageSwitcher() {
           whiteSpace: 'nowrap',
         }}
       >
-        <Globe size={13} strokeWidth={1.5} />
-        {current.code.toUpperCase()}
+        <span style={{ fontSize: '14px', lineHeight: 1 }}>{current.flag}</span>
+        <span>{current.code.toUpperCase()}</span>
         <ChevronDown size={11} strokeWidth={1.5} />
       </button>
 
@@ -75,7 +72,7 @@ export default function LanguageSwitcher() {
             border: '1px solid #E5E0D8',
             borderRadius: '6px',
             boxShadow: '0 8px 24px rgba(27,46,75,0.12)',
-            minWidth: '150px',
+            minWidth: '160px',
             zIndex: 100,
             overflow: 'hidden',
           }}
@@ -102,7 +99,10 @@ export default function LanguageSwitcher() {
                 textAlign: 'left',
               }}
             >
-              <span>{lang.native}</span>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <span style={{ fontSize: '16px', lineHeight: 1 }}>{lang.flag}</span>
+                <span>{lang.native}</span>
+              </div>
               {lang.code === current.code && (
                 <span style={{ color: '#C9A84C', fontSize: '11px', fontWeight: 600 }}>✓</span>
               )}
